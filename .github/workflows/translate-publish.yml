@@ -12,6 +12,88 @@ concurrency:
 jobs:
   translate_and_commit:
     runs-on: ubuntu-latest
+    env:
+      DOUBAO_URL: ${{ secrets.DOUBAO_URL }}
+      DOUBAO_KEY: ${{ secrets.DOUBAO_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      GITHUB_PAT_BOT: ${{ secrets.GITHUB_PAT_BOT }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Full translate (Simplified)
+        run: |
+          export SC_DIR="${GITHUB_WORKSPACE}/cyberplaza_whitepaper/mainmatter_sc"
+          export API_TYPE="${{ env.API_TYPE || 'doubao' }}"
+          ./scripts/translate_sc.sh || true
+
+      - name: Full translate (Traditional)
+        run: |
+          export SC_DIR="${GITHUB_WORKSPACE}/cyberplaza_whitepaper/mainmatter_tc"
+          export API_TYPE="${{ env.API_TYPE || 'doubao' }}"
+          ./scripts/translate_tc.sh || true
+
+      - name: Push translations (BOT PAT)
+        run: |
+          git config user.name "cyberplaza-bot"
+          git config user.email "bot@example.com"
+          git add cyberplaza_whitepaper/mainmatter_sc cyberplaza_whitepaper/mainmatter_tc || true
+          changes=$(git status --porcelain)
+          if [ -n "$changes" ]; then
+            git commit -m "Auto translate: update mainmatter_sc/mainmatter_tc [ci skip translate]" || true
+            git push https://x-access-token:${{ secrets.GITHUB_PAT_BOT }}@github.com/${{ github.repository }} HEAD:main || true
+          else
+            echo "No translation changes"
+          fi
+
+  compile_and_publish:
+    needs: translate_and_commit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup TeX
+        run: |
+          sudo apt update
+          sudo apt install -y texlive-xetex texlive-latex-extra biber
+
+      - name: Compile EN/SC/TC
+        run: |
+          ./scripts/compile_en.sh || true
+          ./scripts/compile_sc.sh || true
+          ./scripts/compile_tc.sh || true
+
+      - name: Upload PDFs as release artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-pdfs-${{ github.run_id }}
+          path: |
+            report.pdf
+            report_sc.pdf
+            report_tc.pdf
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_PAT_BOT }}
+          publish_dir: ./
+          destination_dir: docs
+name: main-translate-and-publish
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  translate_and_commit:
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       actions: read
