@@ -22,3 +22,8 @@ __pycache__/
 *.pyc
 # secrets
 .env
+# latexmk metadata
+*.fdb_latexmk
+*.fls
+# minted cache
+_minted-
