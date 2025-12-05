@@ -10,7 +10,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # Skip running on automatic bot commits or when commit messages include a skip token
+  # Allow manual workflow_dispatch runs to override the guard for testing
   translate_and_commit:
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.actor != 'cyberplaza-bot' && !contains(github.event.head_commit.message, '[ci skip translate]')) }}
     runs-on: ubuntu-latest
     env:
       DOUBAO_URL: ${{ secrets.DOUBAO_URL }}
@@ -49,6 +52,7 @@ jobs:
 
   compile_and_publish:
     needs: translate_and_commit
+    if: ${{ github.event_name == 'workflow_dispatch' || (github.actor != 'cyberplaza-bot' && !contains(github.event.head_commit.message, '[ci skip translate]')) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
