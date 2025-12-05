@@ -1,0 +1,381 @@
+\chapter{技術與架構}
+
+
+
+\section{專案治理基礎設施}
+
+\subsection{一般說明}
+
+CyberPlaza網路由CyberPlaza基金會與CyberPlaza社群組成。
+
+CyberPlaza基金會是一家無營利分散式組織，致力於CyberPlaza平台的順利營運、計算技術與應用的推廣發展，以及支援平台上的分散式社群建構與發展。基金會由CyberPlaza社群中的CPT持有者擁有並控制，由網路的核心成員（見白皮書第8節）與基金會根據需要不定期指派的顧問負責運作。基金會將成立CyberPlaza Labs，負責研發新的計算資源技術與應用，以推動平台所需的技術創新與進步。
+
+CyberPlaza社群是網路的社群部分，由流動性提供者、用戶與SP組成，他們共同參與基金會治理、開發與推廣。社群成員可透過參與治理、向基金會提出業務方向與技術發展相關提案，以及交流分享經驗來推動平台的發展與成長。
+
+CyberPlaza基金會與CyberPlaza社群之間的緊密聯繫對於實現網路的願景與使命至關重要。
+
+\subsection{智能合約模組}
+
+我們將CPT部署為符合ERC20標準的智能合約在Arbitrum（以太坊的Layer 2）上，選擇Arbitrum的原因是其低交易成本與高吞吐量。平台也會根據生態系擴展的需要橋接至其他鏈。
+
+CPT代幣合約包含以下關鍵功能：標準ERC20功能（轉帳、授權等）、針對veToken機制的質押與鎖定功能、治理投票整合、獎勵分配機制、緊急暫停功能（由治理控制），以及用於未來增強的可升級代理模式。
+
+\textbf{注意}：平台直接使用USDC進行支付，消除了對專屬穩定幣的需求以及相關的監管風險。
+
+\begin{verbatim}
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+
+contract CPTToken is ERC20 {
+  struct LockInfo {
+     uint256 amount;
+     uint256 lockTimestamp;
+     uint256 unlockTimestamp;
+  }
+
+   mapping (address => LockInfo[]) public locks;
+
+   constructor(uint256 initialSupply) ERC20("CPT Token", "CPT") {
+     _mint(msg.sender, initialSupply);
+   }
+
+   function lock(uint256 _amount, uint256 _lockTime) public {
+     require(_amount <= balanceOf(msg.sender), "Not enough CPT to lock");
+     require(_lockTime > 0, "Lock time must be positive");
+
+       uint256 lockUntil = block.timestamp + _lockTime;
+    
+       LockInfo memory newLock = LockInfo({
+           amount: _amount,
+           lockTimestamp: block.timestamp,
+           unlockTimestamp: lockUntil
+       });
+    
+       locks[msg.sender].push(newLock);
+    
+       _burn(msg.sender, _amount);
+
+   }
+
+  function unlock(uint256 lockIndex) public {
+    require(lockIndex < locks[msg.sender].length, 
+            "No lock found at this index");
+    require(block.timestamp >= locks[msg.sender][lockIndex].unlockTimestamp,
+            "CPT still locked");
+
+        uint256 amountToUnlock = locks[msg.sender][lockIndex].amount;
+        locks[msg.sender][lockIndex] = 
+            locks[msg.sender][locks[msg.sender].length - 1];
+        locks[msg.sender].pop();
+    
+        _mint(msg.sender, amountToUnlock);
+    }
+
+   function calculateLockedAmount(address user, uint256 lockDuration) 
+       public view returns (uint256) {
+     uint256 totalLockedAmount = 0;
+
+        for (uint256 i = 0; i < locks[user].length; i++) {
+           if (block.timestamp - locks[user][i].lockTimestamp > lockDuration) {
+               totalLockedAmount += locks[user][i].amount;
+           }
+        }
+    
+        return totalLockedAmount;
+    }
+
+}
+\end{verbatim}
+
+\subsection{代幣標準與小數點處理}
+
+CPT代幣遵循具有18位小數的標準ERC20規格，而USDC則使用6位小數。平台在所有轉換操作中使用SafeMath函式庫以防止溢位與欠位錯誤。價格預言機整合了小數正規化邏輯，而最低交易門檻則減輕了灰塵攻擊向量。對於分數金額，協議實施了保守的四捨五入機制。
+
+\subsection{投票託管代幣機制}
+
+平台實施了投票託管（ve）代幣模型，以調整長期利害關係人的激勵措施。用戶將CPT鎖定一周至四年不等的期間，並領取不可轉讓的veCPT代幣，該代幣決定了治理權重與獎勵分配。
+
+veCPT餘額遵循以下關係：
+\begin{equation}
+\text{veCPT} = \text{CPT}_{\text{locked}} \times \min\left(\frac{t_{\text{lock}}}{t_{\text{max}}}, 1\right) \times 2.5
+\end{equation}
+其中$t_{\text{lock}}$代表選擇的鎖定期間，$t_{\text{max}} = 4$年為最大鎖定期間。2.5倍的乘數為四年承諾提供了最大治理權重。
+
+當鎖定期接近到期時，veCPT餘額呈線性衰减：
+\begin{equation}
+\text{veCPT}(t) = \text{CPT}_{\text{locked}} \times \frac{t_{\text{remaining}}}{t_{\text{max}}} \times 2.5
+\end{equation}
+此衰减機制透過延長鎖定或重新鎖定代幣來激勵持續參與。
+
+\subsubsection{獎勵分配}
+
+平台以USDC收取的收入進行分配，其中30%以每周或每月的方式撥付至質押獎勵池。個別獎勵根據veCPT持有量按比例計算：
+\begin{equation}
+\text{Reward}_{\text{user}} = \text{Revenue}_{\text{pool}} \times \frac{V_{\text{user}}}{V_{\text{total}}}
+\end{equation}
+其中$V_{\text{user}}$代表用戶的veCPT餘額，$V_{\text{total}}$代表總veCPT供給。有效年化收益率根據質押參與度與平台績效動態變化：
+\begin{equation}
+\text{APY} = \frac{\text{Annual Revenue Pool}}{\text{Total CPT Staked Value}} \times \frac{\text{veCPT Multiplier}}{\text{Average Multiplier}}
+\end{equation}
+
+\subsubsection{安全與優化}
+
+智能合約遵循OpenZeppelin標準接受第三方審計，並由多簽名治理控制參數修改。所有獎勵分配都在鏈上追蹤以確保透明度。安全功能包括外部呼叫的可重入防護、基於角色的存取控制、緊急暫停功能，以及可升級代理模式。關鍵參數變更強制執行48小時的時間鎖。
+
+Gas費優化採用基於Merkle樹的批次領取、veCPT餘額的延遲評估、壓縮儲存變數，以及事件驅動的鏈下索引。這些技術在維持安全保障的同時降低了交易成本。
+
+\subsection{預言機整合}
+
+平台整合Chainlink分散式預言機以進行價格發現與數據彙總。CPT/USD價格供給彙總了來自Uniswap V3時間加權平均價格與中心化交易所報價的數據。USDC/USD驗證使用Chainlink的經過驗證的供給，偏差閾值為0.5%。預言機每5分鐘或價格波動1%時更新，並配有手動後備機制以確保備援。
+
+對於計算資源定價，鏈下彙總器監控主要雲端提供者的公開API（AWS、Azure、GCP、阿里巴巴雲），計算計算、儲存與頻寬的即時市場價格。彙總價格每日或偏差超過5%時發佈至鏈上預言機合約。
+
+預言機安全性依賴於至少七個獨立Chainlink節點的共識。系統會拒絕偏離中位數超過10%或超過一小時的過期數據的價格更新。當檢測到操縱企圖時，斷路器會自動暫停交易。
+
+\subsection{治理架構}
+
+平台的關鍵操作需要透過Gnosis Safe實作的多簽名批准。超過10萬USDC的財庫移動需要9個簽名中的5個，而智能合約升級則需要9個簽名中的7個，並配合48小時的時間鎖。參數調整以9個簽名中的4個達成共識，而緊急安全回應則使用5個簽名中的3個的快速回應設定。
+
+治理流程遵循結構化時間表：持有10萬個以上veCPT的持有者可提交提案，隨後是7天的社群討論期和5天的鏈上投票階段，其中1個veCPT等於1票。獲得批准的提案在48小時延遲後執行。多簽名理事會對惡意提案保留否決權，並接受季度審查。
+
+\subsection{跨鏈基礎設施}
+
+平台實施LayerZero全鏈協議以進行多鏈部署。Arbitrum因其低交易成本和高吞吐量而成為主要鏈。以太坊主網支援針對需要Layer-1安全性的機構用戶，而Polygon整合則為對成本敏感的用戶提供降低的交易成本。未來的擴展包括Optimism（2024年第三季度）和Base（2024年第四季度），以實現更廣泛的生態系整合。
+
+橋接安全性整合了多項防護措施：流動性上限將每條鏈的橋接供給限制在10%，速率限制將吞吐量約束為每小時100萬CPT，緊急暫停機制對異常情況做出回應，以及5%的保險基金為橋接價值提供抵押，以防潛在的漏洞利用。
+
+\subsection{錢包基礎設施}
+
+作為標準的ERC20代幣，CPT支援所有兼容錢包，包括瀏覽器擴充功能（MetaMask、Rabby、Rainbow）、行動應用程式（Trust Wallet、Coinbase Wallet、imToken）、硬體裝置（Ledger、Trezor），以及智能合約錢包（Argent、Gnosis Safe）。計劃未來部署與Fireblocks和Copper.co的機構託管整合。
+
+網路入口網站實施WalletConnect和Web3Modal協議，以實現標準化的錢包連接。連接授權後，平台會查詢用戶餘額、質押位置和veCPT持有量，以啟用完整的功能存取。交易簽名遵循EIP-712標準的類型化結構數據，呈現人類可讀的訊息，提高了對釣魚攻擊向量的安全性。
+
+
+\section{市場計算基礎設施}
+
+\subsection{系統架構}
+
+平台實施三層架構。Web3介面層透過React.js和ethers.js框架管理錢包認證（WalletConnect）、USDC支付處理和CPT獎勵分配。協調層協調CHESS叢集管理系統、作業排程、資源分配、績效監控和SP認證流程。計算資源層彙集了CSP叢集、公開雲端API（AWS、Azure、GCP、阿里巴巴）、私有高效能計算（HPC）中心和未來的邊緣計算節點。
+
+交易流程包括以下步驟：提交作業並存入USDC、智能合約託管直至完成、CHESS調節的資源匹配、在分配的SP基礎設施上執行、即時服務水準協議（SLA）符合性監控、自動支付結算的結果交付，以及按比例的CPT獎勵分配（用戶1-3%，SP 2-5%）。
+
+\subsection{高效能計算基礎設施元件}
+
+高效能計算基礎設施包含專用節點類型：計算節點使用多核處理器和大量記憶體執行數值模擬與數據分析；視覺化節點使用GPU加速渲染大型數據集；I/O節點管理儲存與計算架構之間的數據傳輸；儲存節點提供高並發檔案系統；管理節點協調資源分配與作業排程。
+
+網路架構採用高速互連技術（InfiniBand、乙太網路）進行節點間通訊。平行檔案系統支援大型數據集與中間結果的並發多節點讀寫操作。
+
+\subsubsection{軟體堆疊}
+
+監控與管理工具為管理員提供跨系統元件的即時健康與績效數據，包括CPU使用率、記憶體消耗和網路流量模式。叢集管理軟體協調整體系統操作，具備跨地理分散部署的計算節點的佈建、監控和維護功能。
+
+資源分配採用專用排程器管理CPU時間、記憶體和其他計算資源，以最大化系統使用效率。用戶介面涵蓋命令列工具和網路入口網站，用於作業提交與管理。高效能計算應用中心彙集領域特定的應用程式和範本，使用戶能夠直接下載並部署計算工具。整合帳單系統針對資源類型和帳單週期實施透明定價策略，促進合理的資源利用和準確的成本核算。
+
+\subsection{支付與結算基礎設施}
+
+\subsubsection{託管機制}
+
+作業提交會啟動託管流程，用戶在此流程中批准USDC支付至平台的智能合約。託管合約計算估計成本，其中包含資源類型（CPU/GPU/儲存）、持續時間預測、預言機衍生的市場定價，以及20%的緩衝以應對潛在的超支。USDC在批准後轉入託管，並針對唯一作業識別碼進行鎖定。
+
+作業完成後，實際資源消耗決定最終結算。服務提供者直接獲得95-98%的費用（以USDC支付），而平台則保留2-5%的交易費。多餘的託管資金會自動退還給用戶，CPT獎勵則按比例分配給用戶（1-3%）和SP（2-5%）。
+
+\subsubsection{爭議解決協議}
+
+SLA違反會觸發分級解決機制。在5分鐘內失敗的作業符合自動全額退款的資格。部分完成會根據實際交付產生按比例退款。用戶可在72小時內提交爭議並附上支持證據。價值超過1萬USDC的案件會升級至平台治理仲裁，而保險基金則覆蓋最高10萬USDC的經驗證索賠。
+
+\subsubsection{服務提供者認證}
+
+服務提供者認證需要多階段驗證流程。初始註冊需要公司驗證文件、基礎設施規格、支付錢包地址，以及安全符合性證書（SOC 2、ISO 27001）。技術驗證採用業界標準基準，包括高效能Linpack（HPL）、高效能共軛梯度（HPCG）、STREAM記憶體頻寬、針對AI工作負載的MLPerf，以及網路延遲評估。安全審計驗證AES-256加密、網路隔離和DDoS防護能力。
+
+獲准的候選者進入為期30天的試用期，期間會進行強化監控，作業併發限制為10個。順利完成後可獲得認證服務提供者（CSP）資格，能夠存取機構客戶並參與團購。CSP會出現在高級目錄中，並配有經驗證徽章。
+
+持續符合性要求每月99.5%的運行時間、次5分鐘的作業啟動時間，以及性能在宣稱基準的10%以內。每季度重新認證以驗證持續能力。針對關鍵漏洞的安全修補程式必須在48小時內部署。違規行為會觸發分級處罰：首次違規警告並給予7天整改期，第二次違規暫停30天，第三次違規取消認證。
+
+\subsection{技術堆疊}
+
+平台針對前端開發採用React.js 18+搭配TypeScript，針對Web3整合採用ethers.js v6和WalletConnect v2，針對介面一致性採用Material-UI。後端架構針對API服務採用Node.js/Express.js或Python FastAPI，針對關聯式持久性採用PostgreSQL，針對快取採用Redis，針對非同步作業佇列採用RabbitMQ/Kafka，針對區塊鏈事件索引採用The Graph，針對可觀測性採用Prometheus/Grafana。DevOps基礎設施透過Docker容器化所有服務，透過Kubernetes協調生產部署，透過GitHub Actions實施CI/CD，透過Cloudflare CDN分發內容，並透過Nginx負載平衡流量。
+
+入門級CSP需要100個以上CPU核心（Intel Xeon/AMD EPYC）、500 GB RAM、10 TB NVMe SSD或50 TB HDD、10 Gbps網路上行連結，以及可選的4個以上NVIDIA A100/H100 GPU。企業級CSP可擴展至1萬個以上CPU核心、50 TB以上總RAM、1 PB以上平行檔案系統儲存（Lustre/GPFS）、100 Gbps InfiniBand骨幹，以及100個以上高效能GPU。
+
+\subsection{平台用戶功能}
+
+CPT入口網站服務三個主要群體：探索專案資訊的訪客、購買市場資源（公開雲端、HPC提供者、硬體、軟體、儲存）的用戶，以及執行USDC存款和鑄造作業的流動性提供者。
+
+公開雲端消費者可在包括FQ、Amazon和華為雲在內的供應商之間進行選擇，定價以USDC計價並配有促銷優惠。供應商選擇會將用戶重新導向至原生入口網站（例如AWS），標準操作在此進行，支付路由透過CPT平台託管。平台隨後以法定貨幣與供應商結算。
+
+HPC資源消費者可比較供應商（CT叢集、區域提供者、華為、AWS）的價格、硬體規格、性能指標和區域頻寬。在存入足夠的USDC後，供應商選擇和作業提交透過CHESS入口網站進行，資金在完成前託管，隨後進行法定結算。儲存採購遵循相同的工作流程。
+
+軟體選項包含用戶提供的應用程式或平台列出的來自Ansys、HPC軟體供應商和CHESS應用中心的解決方案。供應商上架可容納硬體、儲存、軟體和輔助計算產品。當兩個元件均來自平台清單時，系統會驗證硬體-軟體相容性，確保執行相容性。架構可根據需求演進適應未來的功能擴展。
+
+
+\subsection{公開雲端整合}
+
+市場彙集了來自主要公開雲端供應商的計算資源，包括AWS、Azure、Google Cloud和阿里巴巴雲。定價以USDC計價，並顯示主動促銷和可用性狀態。
+
+\subsubsection{供應商整合模式}
+
+平台採用三種整合方法。直接API整合利用轉售商憑據透過供應商API（AWS EC2、Azure Resource Manager、GCP Compute Engine）進行即時佈建，支援自動執行個體生命週期管理。優惠券程式碼系統透過預先生成的程式碼解決容量限制，防止超賣，提供基於價值的（100美元通用信用額度）或基於資源的（1000 GPU小時、10 TB儲存）格式。託管服務提供者模式將CyberPlaza定位為MSP，具有批量定價協議，管理供應商帳戶並提供整合帳單。
+
+即時價格比較顯示計算、儲存和網路成本，並包含總擁有成本計算。團購折扣突出顯示相對於直接採購的潛在節省。
+
+\subsubsection{作業提交工作流程}
+
+HPC作業提交流程包含以下步驟：透過篩選的CSP清單（CPU類型、GPU可用性、區域、定價）選擇資源；透過應用中心範本或自訂程式碼進行作業配置，並指定需求（節點、核心、記憶體、執行時間、GPU）和I/O位置；估算成本，包含USDC細分和預計CPT獎勵；支付授權將USDC轉移至託管並包含應急緩衝；透過CHESS排程器分配執行，並進行即時狀態監控；完成結算交付結果，並自動進行支付分配、多餘退款和CPT獎勵發放。
+
+進階功能包括支援100個以上具有參數掃描的作業的批次提交、定義順序執行的工作流程依賴性、用於容錯的檢查點/重啟、可預選容量折扣50-70%的預告實例競標，以及用於動態資源調整的自動擴展。
+
+服務提供者透過集中式儀表板管理操作，涵蓋資源分配、作業監督、財務追蹤（USDC收入、CPT累積）和性能分析（客戶滿意度、使用率指標）。
+
+\subsection{多叢集管理系統}
+
+CHESS（叢集高效能執行與排程系統）平台提供跨地理分散計算資源的統一管理。系統透過具有基於角色存取控制的集中式網路入口網站整合監控、排程和資源分配。
+
+\subsubsection{核心功能}
+
+平台透過網路介面和SSH協議支援全面的數據管理，實現檔案操作（包含上傳、下載、壓縮和解壓縮）。節點管理透過批次命令控制電源狀態、遠端存取（VNC、shell），並支援異質硬體配置（CPU、GPU、FPGA）。資源配額對儲存和計算分配實施管理政策，並在閾值違反時自動生成警示。
+
+高可用性架構透過備援管理節點和資料庫複製消除單點故障。系統協調多個地理分散的叢集，在子叢集之間進行統一的用戶角色傳播。
+
+
+\subsection{性能監控基礎設施}
+
+高效能和雲端計算系統彙集了大量硬體資源，透過高速網路互連，形成低延遲、高容量的配置。有效的叢集管理需要監控和管理工具，提供資源配置、即時性能追蹤、故障檢測與警示，以及使用狀態視覺化。
+
+\subsubsection{CHESS監控功能}
+
+CHESS監控系統透過整合儀表板提供全面的叢集監督，顯示跨乙太網路和InfiniBand架構的CPU和記憶體使用率、負載狀態、儲存狀態和網路吞吐量。自訂時間間隔選擇支援歷史趨勢分析和性能追蹤。儀表板顯示提供可自訂的大型螢幕演示，並針對儲存使用、作業排程和網路統計數據進行動態指標更新。
+
+多叢集監控延伸至地理分散的部署，具有適應性螢幕配置和解析度最佳化。機架視覺化呈現物理拓撲，整合了電源管理和VNC遠端存取控制。單節點監控捕獲細粒度的CPU、記憶體、儲存、負載和網路指標，同時提供故障診斷和復原建議。GPU監控追蹤裝置特定的使用率、記憶體利用率、溫度和頻寬。作業監控分析即時執行狀態和佇列組成，並提供詳細的CPU利用率、記憶體消耗和節點負載統計數據。叢集警示實施可配置的閾值，並透過電子郵件和系統通知路由。
+
+性能指標按用戶定義的間隔收集，捕獲CPU、記憶體、磁碟和網路數據。物理拓撲視覺化包含機架和節點佈局，以及基於閾值的故障警示。
+
+
+\subsubsection*{排程器與資源管理}
+
+高效的排程和資源管理在多叢集系統中至關重要。CHESS提供靈活的排程政策，包括FIFO、搶佔和回填策略。系統支援具有服務品質（QoS）配置的資源保留、涵蓋串列、平行和GPU工作負載的進階作業提交，以及用於負載平衡最佳化的佇列管理。
+
+\subsubsection{作業提交與管理}
+
+用戶透過命令列介面、基於網路的GUI或針對常見工作流程的應用範本提交作業。管理員配置資源配額、優先級和提交政策，以管理系統存取和使用。
+
+
+
+% \subsection*{6.2.5 Pricing Module}
+
+% This module will focus on calculating costs for resource usage and presenting pricing details to users. It will integrate with job scheduling and monitoring systems for real-time cost tracking.
+
+
+% \subsubsection*{6.2.5 User Interfaces and Operational Portals}
+
+\subsubsection{用戶管理}
+
+平台支援自我註冊和管理員配置的帳戶，並整合LDAP認證以進行集中管理。基於角色的存取控制實施預設角色（管理員、部門管理員、用戶），並配有靈活的權限分配，管理系統存取和功能。
+
+\subsubsection{通知與訊息}
+
+用戶會收到關於帳單和使用訊息的自動警示，以及管理公告。
+
+
+\subsection{應用中心}
+
+應用中心透過可瀏覽的庫提供對預安裝HPC應用程式（Ansys、MATLAB、TensorFlow）的存取。用戶透過具有互動式參數配置的圖形範本提交作業。輸出管理包含日誌檢視、錯誤分析、性能指標追蹤，以及整合的視覺化工具（針對AI應用的TensorBoard）。
+
+\subsection{硬體性能評估}
+
+硬體性能評估模組執行基準測試，測量CPU和GPU性能以及網路吞吐量和延遲。資源效率分析根據工作負載特性最佳化分配策略。故障復原指標評估硬體在故障場景下的可靠性和復原性能。
+
+\subsection{安全架構與符合性}
+
+\subsubsection{多層安全模型}
+
+平台在三層實施深度防禦安全。智能合約安全採用Certora或等效工具進行形式驗證，由CertiK、Trail of Bits或OpenZeppelin進行年度第三方審計，針對關鍵漏洞提供高達50萬美元的漏洞獎勵計劃，具有48小時時間鎖的可升級透明代理模式，以及用於緊急漏洞利用回應的斷路器。
+
+平台安全包含透過OAuth 2.0和JWT認證進行API保護，限制100次請求/分鐘的速率限制，SP存取的IP白名單，以及90天的API金鑰輪換。數據加密實施TLS 1.3用於傳輸保護，AES-256用於靜態數據，端到端加密用於敏感工作負載，以及硬體安全模組用於金鑰管理。基礎設施安全部署Cloudflare DDoS保護、具有OWASP規則集的Web應用程式防火牆、每季度滲透測試，以及用於事件監控的安全資訊與事件管理（SIEM）系統。
+
+數據隱私和符合性措施透過帳戶刪除權限、數據可攜帶性、設計隱私原則和歐盟數據駐留選項來應對GDPR要求。KYC/AML程序針對每月超過1萬USDC的交易實施基本驗證，針對CSP認證實施增強驗證，針對可疑活動進行交易監控，以及符合FATF旅行規則。數據隔離實施容器化或基於VM的作業執行、網路分段、完成後自動數據清除，以及跨用戶洩漏預防。
+
+\subsubsection{事件回應}
+
+連續安全作業中心監控異常活動，包括異常提款、智能合約漏洞利用和API濫用。事件分類遵循四級嚴重性模型（關鍵、高、中、低），並以15分鐘的評估目標。關鍵事件觸發立即合約暫停，並在一小時內發出多簽名通知。關鍵事件在24小時內公開披露，而事後檢討報告在7天內發佈。復原程序透過治理管道部署修補程式，並從保險基金賠償受影響的用戶。
+
+\subsubsection{監管符合性}
+
+平台追求SOC 2 Type II認證以確保數據安全和可用性（第一年目標），以及ISO 27001認證以確保資訊安全管理（第二年目標）。Cloud Security Alliance STAR認證驗證CSP安全狀態。PCI DSS符合性仍在考慮用於未來的支付方式擴展。
+
+\subsection{可擴展性與性能優化}
+
+\subsubsection{水平擴展架構}
+
+平台透過分散式資料庫架構進行水平擴展，在區域間使用PostgreSQL讀副本，透過ID雜湊對用戶數據進行分片，針對熱數據（工作階段、定價）使用Redis叢集，以及透過Cloudflare CDN交付靜態資產。
+
+微服務架構將功能分解為獨立可擴展的服務：用戶服務（認證、配置檔）、作業服務（提交、排程、監控）、支付服務（USDC託管、結算、CPT獎勵）、SP服務（上架、認證、評分）、定價服務（預言機彙總）和通知服務（電子郵件、推播、鏈上事件）。每個服務根據需求自主擴展。
+
+負載平衡在美國、歐盟和亞洲區域實施地理分佈，使用Kubernetes水平Pod自動調節器進行動態容量調整，使用Hystrix斷路器防止級聯故障，以及使用RabbitMQ佇列進行非同步作業處理。
+
+\subsubsection{性能目標}
+
+\begin{center}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{指標} & \textbf{第一年目標} & \textbf{第三年目標} \\
+\hline
+API回應時間 & <200ms (p95) & <100ms (p95) \\
+作業提交時間 & <5秒 & <2秒 \\
+支付結算 & <30秒 & <10秒 \\
+頁面載入時間 & <2秒 & <1秒 \\
+平台運行時間 & 99.5\% & 99.9\% \\
+並用用戶 & 10,000 & 100,000 \\
+每日交易數 & 50,000 & 1,000,000 \\
+\hline
+\end{tabular}
+\end{center}
+
+\subsubsection{區塊鏈可擴展性}
+
+Arbitrum Layer 2部署為主要操作提供低於0.10美元的交易費和40,000 TPS的吞吐量。批次交易處理對獎勵分配進行分組，以分攤Gas成本。The Graph協議處理鏈下事件索引。未來開發包括針對高頻微型支付場景的狀態通道。
+
+Gas費優化技術透過基於Merkle證明的獎勵領取（節省80%）、veCPT餘額的延遲評估、壓縮儲存變數編碼，以及在功能等效的情況下優先使用事件日誌而非狀態變數，降低了交易成本。
+
+\subsection{災難復原}
+
+\subsubsection{備份基礎設施}
+
+資料庫備份每日（完整）和每六小時（增量）執行，並持續進行交易日誌複製。系統在冷儲存歸檔前維持30天的保留期。智能合約狀態利用區塊鏈固有的不可變性，輔以封存節點部署和每季度分散式儲存快照（IPFS/Arweave）。用戶作業結果備份至指定的儲存端點，平台中繼數據保留90天，並具有符合GDPR的按需匯出功能。
+
+\subsubsection{復原目標}
+
+表~\ref{tab:recovery-targets}規範了元件級的復原時間（RTO）和復原點（RPO）目標。
+
+\begin{table}[htbp]
+\centering
+\caption{復原時間與點目標}
+\label{tab:recovery-targets}
+\begin{tabular}{lcc}
+\hline
+\textbf{元件} & \textbf{RTO} & \textbf{RPO} \\
+\hline
+智能合約 & N/A & 0 \\
+網路入口網站 & 1小時 & 6小時 \\
+資料庫 & 2小時 & 1小時 \\
+作業排程器 & 30分鐘 & 15分鐘 \\
+\hline
+\end{tabular}
+\end{table}
+
+美國和歐盟區域的主動-主動部署能夠在主區域不可用5分鐘後自動進行DNS故障轉移。即時跨區域數據同步維持一致性，並具有操作干預的手動覆蓋能力。
+
+\subsection{開發藍圖}
+
+短期開發（6-12個月）優先考慮iOS和Android的行動應用程式、針對第三方整合的增強API產品（RESTful、GraphQL）、基於機器學習的成本最佳化，以及額外的區塊鏈橋接部署（Polygon、Optimism）。
+
+中期目標（1-2年）透過針對IoT部署的邊緣計算支援、針對敏感工作負載的保密計算整合（Intel SGX、AMD SEV）、分散式儲存協議（Filecoin、Arweave）、專用AI/ML資源市場，以及探索性的量子計算合作夥伴關係來擴展平台功能。
+
+長期願景（2-5年）包括全面的DAO治理轉型、開放分散式計算協議開發、零知識證明實施以增強隱私、透過IBC或等效協議的跨鏈互通性，以及基於NFT的實體計算資源代幣化。
+
+\subsection{總結}
+
+本章詳述了整合Web3區塊鏈基礎設施與成熟HPC系統的技術架構。混合設計將分散式激勵機制（CPT代幣、投票託管治理）與成熟的CHESS叢集管理平台相結合。安全架構透過智能合約審計、基礎設施強化和監管符合性途徑（SOC 2、ISO 27001）實施多層保護。系統可從數千名用戶擴展至數十萬名並用用戶，同時維持次200ms的API回應時間。
+
+相較於現有的分散式計算專案（Golem、iExec、Render），CyberPlaza透過成熟的基礎設施（20年以上CHESS平台歷史）、企業符合性導向、超越對等架構的多雲整合、預先整合的應用生態系，以及結合分散式存取與專業SP認證的混合市場進行差異化定位。此定位既滿足了企業計算需求，又實現了Web3經濟參與。

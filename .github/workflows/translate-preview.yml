@@ -1,0 +1,92 @@
+name: PR translation preview
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  detect_changed_tex:
+    runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.set_changed.outputs.changed }}
+    steps:
+      - name: Checkout (fetch full history)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect changed mainmatter tex files
+        id: set_changed
+        run: |
+          base=${{ github.event.pull_request.base.sha }}
+          head=${{ github.event.pull_request.head.sha }}
+          changed=$(git diff --name-only $base..$head -- cyberplaza_whitepaper/mainmatter/*.tex || true)
+          echo "::set-output name=changed::${changed}"
+
+  build_preview:
+    needs: detect_changed_tex
+    runs-on: ubuntu-latest
+    if: ${{ needs.detect_changed_tex.outputs.changed != '' }}
+    env:
+      DOUBAO_URL: ${{ secrets.DOUBAO_URL }}
+      DOUBAO_KEY: ${{ secrets.DOUBAO_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq texlive-xetex texlive-latex-extra biber fontconfig
+
+      - name: Save changed-list
+        run: |
+          echo "${{ needs.detect_changed_tex.outputs.changed }}" | tr ' ' '\n' > changed_files.txt
+          cat changed_files.txt || true
+
+      - name: Translate changed files (Simplified, preview/test mode)
+        run: |
+          # Use test mode to avoid hitting production APIs during preview
+          export API_TYPE=test
+          while read -r f; do
+            # convert path to repo relative path
+            basefile=$(basename "$f")
+            # call translator with a specific file
+            ./scripts/translate_sc.sh "$f" || true
+          done < changed_files.txt
+
+      - name: Translate changed files (Traditional, preview/test mode)
+        run: |
+          export API_TYPE=test
+          while read -r f; do
+            ./scripts/translate_tc.sh "$f" || true
+          done < changed_files.txt
+
+      - name: Compile previews
+        run: |
+          ./scripts/compile_sc.sh || true
+          ./scripts/compile_tc.sh || true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: translation-preview-${{ github.run_id }}
+          path: |
+            cyberplaza_whitepaper/report_sc.pdf
+            cyberplaza_whitepaper/report_tc.pdf
+            cyberplaza_whitepaper/mainmatter_sc/*.tex
+            cyberplaza_whitepaper/mainmatter_tc/*.tex
+
+      - name: Post PR comment (link to artifacts)
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            ✅ Translation preview artifacts for this PR are available in the workflow run artifacts.\n\nDownload them from the Actions run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}

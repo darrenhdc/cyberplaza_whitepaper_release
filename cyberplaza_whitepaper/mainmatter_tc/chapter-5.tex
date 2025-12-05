@@ -1,0 +1,338 @@
+\chapter{CyberPlaza代幣（CPT）與代幣經濟學}
+\subsection{CPT代幣概述與效用}
+
+\subsubsection{支付系統}
+
+平台使用USDC作為所有市集交易的主要支付貨幣。此方法消除了與專有穩定幣相關的監管風險，同時確保符合全球穩定幣框架的監管規定、熟悉的使用者體驗（USDC廣泛被採用且受信任）、透明的美元計價定價、與現有DeFi基礎設施的無縫整合，以及無演算法穩定幣失敗的風險。
+
+\subsubsection{CyberPlaza代幣（CPT）}
+
+CPT是平台的原生治理與效用代幣，旨在使所有利害關係人的誘因一致，並捕捉平台價值成長。
+
+\subsubsection{CPT核心效用}
+
+\paragraph{治理權}
+
+CPT持有者可以對平台參數（費用結構、收入分配比例等）進行表決，對新功能、合作夥伴關係和戰略方向提出提案並表決，並參與財庫管理和資金配置決策。投票權重基於質押的CPT數量和鎖倉期限（veToken模型）。平台實施每季治理會議和透明的提案流程。
+
+\paragraph{透過質押的收入分潤}
+
+持有者可以質押CPT以獲得平台收入分配（以USDC支付）。平台收入的30\%分配到質押獎勵池（針對永續性優化）。質押獎勵每周或每月分配（由治理決定）。較長的質押期限可獲得獎勵倍數（4年鎖倉最高2.5倍）。目標年化收益率（APY）為6--10\%，基於平台績效（更永續）和質押比例。無無常損失風險（單一資產質押）。
+
+\paragraph{使用優惠}
+
+質押CPT可享平台服務5--15\%折扣（分級系統），存取高級功能（包括進階分析、API存取權和優先支援），高交易量使用者可享降低的交易費用，優先存取新服務和測試版功能，以及高需求計算資源的優先配置。
+
+\paragraph{生態誘因}
+
+平台為所有使用者類別提供誘因。使用者可獲得消費金額1--3\%的CPT（現金回饋計畫）。服務提供者的交易額可獲2--5\%的CPT獎金。流動性提供者可獲得2--4\%的CPT年化收益率作為額外收益。推薦人邀請新使用者或服務提供者至平台可獲得CPT。社群貢獻透過漏洞獎勵、內容創作和程式碼貢獻獲得回報。
+
+\paragraph{通縮機制}
+
+平台收入的20\%用於從公開市場買回CPT。購回的CPT代幣將永久銷毀（發送至0x0地址），這會隨時間減少流通供應量，創造稀缺性。平台實施透明的每季銷毀活動並進行鏈上驗證，預計5年內供應量減少30--40\%。這有利於所有CPT持有者，不僅限於質押者。
+
+\subsection{收入模型與分配機制}
+
+\subsubsection{平台收入來源}
+
+平台透過多種管道產生收入，如表\ref{tab:revenue}所示。
+
+\begin{table}[htbp]
+\centering
+\caption{平台收入預測}
+\label{tab:revenue}
+\begin{tabular}{lccccr}
+\hline
+\textbf{Revenue Stream} & \textbf{Rate/Amount} & \textbf{Year 1} & \textbf{Year 2} & \textbf{Year 3} & \textbf{\% of Total} \\
+\hline
+\textbf{SaaS Subscriptions} & \$50--500/month & \$1.5M & \$4M & \$8--10M & \textbf{40--50\%} \\
+Transaction Fees & 2--5\% of GMV & \$0.8M & \$2.5M & \$5--7M & \textbf{25--30\%} \\
+API \& Data Services & Variable & \$0.3M & \$1.5M & \$3--4M & \textbf{15--20\%} \\
+Certification Services & \$5K--50K per SP & \$0.3M & \$0.8M & \$1--2M & \textbf{5--8\%} \\
+Group-Buying Margins & 5--10\% margins & \$0.2M & \$0.7M & \$1.5--2M & \textbf{5--10\%} \\
+\hline
+\textbf{Total Revenue} & --- & \textbf{\$3.1M} & \textbf{\$9.5M} & \textbf{\$19--25M} & \textbf{100\%} \\
+\hline
+\end{tabular}
+\end{table}
+
+與原始模型相比的主要變更包括：SaaS訂閱現在作為主要收入來源（40--50\%）以提高可預測性；團購縮減為輔助（5--10\%），考慮到早期規模這是合理的；強調API服務（15--20\%），因其具有高利潤和可擴展性。保守預測基於第3年0.01\%的市場滲透率。
+
+\subsubsection{SaaS訂閱級別}
+
+平台提供分級訂閱方案，如表\ref{tab:saas}所示。
+
+\begin{table}[htbp]
+\centering
+\caption{SaaS訂閱級別（說明性）}
+\label{tab:saas}
+\begin{tabularx}{\textwidth}{llXXr}
+\hline
+\textbf{Tier} & \textbf{Price/Month} & \textbf{Target Users} & \textbf{Features} & \textbf{Est. Users (Y3)} \\
+\hline
+Free & \$0 & Individuals & 2 cloud accounts, basic monitoring & 10,000+ \\
+Starter & \$50 & Small teams & 5 accounts, cost tracking, 1\% CPT cashback & 2,000 \\
+Professional & \$200 & Dev teams & 10 accounts, AI optimization, API, 3\% CPT & 500 \\
+Enterprise & \$500--2000 & Companies & Unlimited, custom integration, 5\% CPT & 50--100 \\
+\hline
+\end{tabularx}
+\end{table}
+
+這種分級模型提供可預測的定期收入，同時仍允許免費增值使用者取得。
+
+\textbf{Important Note}: These projections represent our target scenario. We also model conservative scenarios with Year 1 revenue of \$500K--1M to ensure financial sustainability even with slower initial growth. Our business model does not depend on achieving large-scale group-buying discounts immediately.
+
+\subsubsection{收入分配模型}
+
+平台收入（100\%）分配如下：質押獎勵池獲得30\%（為永續性而降低），並以USDC按比例分配給CPT質押者。營運與開發獲得35\%（為成長而增加），分配給工程與產品開發（15\%）、行銷與業務開發（10\%）以及基礎設施與安全（5\%）。買回與銷毀獲得20\%，用於從去中心化交易所（DEX）購回CPT並永久銷毀。團隊與基金會獲得10\%，用於核心團隊薪酬（5\%）和基金會營運（5\%）。緊急準備金獲得5\%，作為波動的新緩衝。
+
+\subsubsection{質押獎勵計算範例}
+
+考慮第3年平台成熟的情境，平台月收入為1,500,000美元。質押池分配（40\%）提供600,000美元。如果質押的總CPT為40,000,000（供應量的40\%），而您的質押量為10,000 CPT（質押供應量的0.025\%），那麼您的月獎勵為600,000美元 × 0.025\% = 150美元USDC，年獎勵為150美元 × 12 = 1,800美元USDC。
+
+如果CPT價格=2美元，那麼您的質押價值為20,000美元，年化收益率為1,800美元 / 20,000美元 = 9\%。此外，額外福利包括平台治理的投票權、服務折扣（5--15\%）以及買回/銷毀帶來的價格上漲。
+
+\subsubsection{USDC存款人流動性池報酬}
+
+將USDC存入借貸池的流動性提供者可獲得報酬，如表\ref{tab:liquidity}所示。
+
+\begin{table}[htbp]
+\centering
+\caption{流動性提供者報酬}
+\label{tab:liquidity}
+\begin{tabular}{llll}
+\hline
+\textbf{Component} & \textbf{APY} & \textbf{Paid In} & \textbf{Source} \\
+\hline
+Base Interest & 6--8\% & USDC & Platform operational profits \\
+CPT Incentives & 2--4\% & CPT & Token emission (vesting) \\
+\textbf{Total Expected} & \textbf{8--12\%} & \textbf{Mixed} & \textbf{Sustainable yields} \\
+\hline
+\end{tabular}
+\end{table}
+
+主要功能包括：存款用於團購營運（透明的鏈上追蹤）；逐步提款系統防止擠兌情境；保險基金涵蓋最高10\%的池TVL；智慧合約由領先公司審計；實時年化收益率更新基於池利用率。
+
+\subsection{代幣分配與鎖定發放時程表}
+
+\subsubsection{總供應量與分配}
+
+總供應量為100,000,000 CPT（固定，無通貨膨脹）。分配細節如表\ref{tab:allocation}所示。
+\begin{table}[htbp]
+\centering
+\caption{CPT代幣分配}
+\label{tab:allocation}
+\begin{tabularx}{\textwidth}{lrrr>{\raggedright\arraybackslash}X}
+\hline
+\textbf{Category} & \textbf{Allocation} & \textbf{Tokens} & \textbf{\%} & \textbf{Lock \& Vesting Terms} \\
+\hline
+\textbf{Community Incentives} & \textbf{Total} & \textbf{55,000,000} & \textbf{55\%} & \textbf{Performance-based release} \\
+\quad - User Rewards & & 25,000,000 & 25\% & Released based on platform GMV milestones \\
+\quad - SP Incentives & & 20,000,000 & 20\% & Released based on transaction volume \\
+\quad - LP Rewards & & 10,000,000 & 10\% & 5-year emission, front-loaded \\
+\textbf{Foundation} & & \textbf{17,500,000} & \textbf{17.5\%} & \textbf{10\% at TGE, 90\% linear vest 24 months} \\
+\textbf{Private Sale} & & \textbf{12,500,000} & \textbf{12.5\%} & \textbf{6-month cliff, 18-month linear vest} \\
+\textbf{Team} & & \textbf{15,000,000} & \textbf{15\%} & \textbf{12-month cliff, 36-month linear vest} \\
+\hline
+\textbf{Total} & & \textbf{100,000,000} & \textbf{100\%} & \\
+\hline
+\end{tabularx}
+\end{table}
+
+與原始版本相比的主要變更包括：社群分配從50\%增加到55\%（移除USDC持有者分配）；投資者分配從15\%減少到12.5\%（社群優先方法）；團隊分配從17.5\%減少到15\%（更強的一致性）；取消「流動性提供者」類別（替換為流動性提供者誘因）。
+
+\subsubsection{鎖定發放細節}
+
+\paragraph{社群誘因（55\%）}
+
+使用者獎勵（25M CPT）每月根據平台GMV目標發放。公式為：每月發放量 = 基礎金額 ×（實際GMV / 目標GMV）。分配期為5年，未領取的代幣滾動到下一期。
+
+服務提供者誘因（20M CPT）每季度根據交易額發放。高品質服務提供者（CSPs）可獲得獎勵倍數。分配期為5年，可能有基於績效的加速。
+
+流動性提供者獎勵（10M CPT）採用前載發行：第1年（40\%）、第2年（30\%）、第3--5年（30\%）。每周分配給活躍的流動性提供者，長期存款可獲得獎金。鎖定發放為50\%立即發放，50\%在6個月內線性鎖定發放。
+
+\paragraph{團隊分配（15\%）}
+
+團隊分配包含12個月禁售期（第一年無代幣發放）。禁售期後，36個月線性鎖定發放。總鎖定發放期為4年。鎖定發放合約是透明且公開可驗證的。
+
+\paragraph{基金會分配（17.5\%）}
+
+10\%在TGE時發放用於初期營運（多簽控制）。剩餘90\%在24個月內線性鎖定發放。這些資金用於合作夥伴關係、審計、法律、行銷和補助，每季發布透明度報告。
+
+\paragraph{私募（12.5\%）}
+
+私募包含6個月禁售期，禁售期後18個月線性鎖定發放。總鎖定發放期為2年。防砸盤機制將賣出限制為每日成交量的最高5\%。
+
+\subsection{流動性誘因與veToken質押模型}
+
+\subsubsection{veToken機制（投票託管CPT）}
+
+我們實施受Curve Finance啟發的veToken模型，該模型經證實可使長期誘因一致。使用者鎖倉CPT以獲得veCPT（不可轉讓）。鎖倉期限決定veCPT倍數，如表\ref{tab:vetoken}所示。
+
+\begin{table}[htbp]
+\centering
+\caption{veToken倍數（依鎖倉期限）}
+\label{tab:vetoken}
+\begin{tabular}{ll}
+\hline
+\textbf{Lock Duration} & \textbf{veCPT Multiplier} \\
+\hline
+1 week & 0.01x \\
+1 month & 0.04x \\
+3 months & 0.25x \\
+6 months & 0.50x \\
+1 year & 1.00x \\
+2 years & 1.50x \\
+4 years & 2.50x (maximum) \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{veCPT的優勢}
+
+增強的治理權力：1 veCPT = 1票（相較於標準CPT：除非鎖倉否則0票），鎖倉越長，在平台方向上的影響力越強。
+
+提升的質押獎勵：基礎年化收益率8--12\%（1年鎖倉），最高2.5倍提升（4年鎖倉），最大鎖倉可獲得高達20--30\%的提升年化收益率。
+
+費用分潤優先權：veCPT持有者優先獲得收入分配，veCPT餘額越高，費用池份額越高。
+
+獨家優勢：最高服務折扣（15\%），優先存取超額認購資源，以及獨家治理提案權（需要最低veCPT）。
+
+\subsubsection{流動性挖礦計畫}
+
+階段1：發布誘因（第1--6個月）：高CPT發行以引導流動性。Uniswap V3上的CPT/USDC池每日獲得2000 CPT。CPT單一質押每日獲得1500 CPT。USDC借貸池每日獲得相當於1000 CPT的獎勵。
+
+階段2：成長（第7--24個月）：降低發行量，專注於永續收益。總發行量約為每日2500 CPT，增加USDC借貸池的權重（激勵流動性）。
+
+階段3：成熟（第25個月起）：最低新發行量（約每日1000 CPT）。收入驅動的收益成為主要吸引力，買回與銷毀創造供應稀缺性。
+
+\subsubsection{防巨鯨與公平發布機制}
+
+平台實施多項保護機制，包括私募中的單次購買上限為10萬美元、鎖定發放確保TGE時無大規模砸盤、時間加權投票防止治理攻擊、逐步發行防止挖礦後砸盤，以及社群分配大於團隊+投資者（55\% > 27.5\%）。
+
+\subsubsection{比較：傳統 vs. veCPT模型}
+
+表\ref{tab:comparison}比較傳統質押與veCPT模型。
+
+\begin{table}[htbp]
+\centering
+\caption{傳統質押 vs. veCPT模型}
+\label{tab:comparison}
+\begin{tabular}{lll}
+\hline
+\textbf{Metric} & \textbf{Traditional Staking} & \textbf{veCPT Model} \\
+\hline
+Minimum commitment & None & 1 week \\
+Maximum rewards & Fixed APY & Up to 2.5x boost \\
+Governance power & Linear (1 token = 1 vote) & Time-weighted \\
+Long-term alignment & Low & High \\
+Mercenary capital risk & High & Low \\
+Price stability & Lower & Higher \\
+\hline
+\end{tabular}
+\end{table}
+
+為什麼這個模型有效：它由Curve（\$CRV）證實，並自2020年以來經過實戰測試。它使長期持有者的誘因一致，減少短期挖礦者的賣出壓力，創造強大的治理參與度，並提供不依賴永久通貨膨脹的永續代幣經濟學。
+
+\subsection{上市策略與保守情境}
+
+\subsubsection{冷啟動策略}
+
+成功發布雙邊市集需要謹慎的順序安排。我們的方法包含三個階段。
+
+\paragraph{階段0：種子使用者（第1--3個月）}
+
+目標為50--100名付費使用者。來源包括ClusterTech現有客戶群以及Web3專案。誘因包括3個月免費試用、早期採用者可享50\%終身折扣，以及初始CPT空投（總預算100K CPT）。預算約為15萬美元（行銷+誘因）。
+
+\paragraph{階段1：早期採用者（第3--12個月）}
+
+目標為500--1000名付費使用者和10名企業客戶。策略包括推薦計畫（推薦者和被推薦者均可獲得50美元信用額度）、透過技術部落格和YouTube教學進行內容行銷、駭客松贊助（Web3社群），以及雲端轉售商合作夥伴關係。預算約為50萬美元（行銷+銷售）。
+
+\paragraph{階段2：成長（第12--24個月）}
+
+目標為2000--5000名使用者和50名企業客戶。策略包括CPT質押誘因全面啟用、戰略合作夥伴關係（Infura、Alchemy等），以及會議出席和思想領導力。預算為100萬美元以上（隨收入擴增）。
+
+\subsubsection{財務情境}
+
+為了向投資者提供透明度，我們模擬了三種情境。
+
+\paragraph{保守情境（高機率）}
+
+表\ref{tab:conservative}呈現保守財務情境。
+
+\begin{table}[htbp]
+\centering
+\caption{保守財務情境}
+\label{tab:conservative}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Metric} & \textbf{Year 1} & \textbf{Year 2} & \textbf{Year 3} \\
+\hline
+Paying Users & 200 & 1,000 & 3,000 \\
+ARPU (\$/month) & \$40 & \$60 & \$80 \\
+MRR & \$8K & \$60K & \$240K \\
+Annual Revenue & \$96K & \$720K & \$2.9M \\
+Operating Costs & \$600K & \$900K & \$1.5M \\
+Net Income & -\$504K & -\$180K & +\$1.4M \\
+Cumulative Cash & -\$500K & -\$680K & +\$720K \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Base Case Scenario (Medium probability)}
+
+Table~\ref{tab:basecase} presents the base case financial scenario.
+
+\begin{table}[htbp]
+\centering
+\caption{Base Case Financial Scenario}
+\label{tab:basecase}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Metric} & \textbf{Year 1} & \textbf{Year 2} & \textbf{Year 3} \\
+\hline
+Paying Users & 500 & 2,500 & 8,000 \\
+ARPU (\$/month) & \$50 & \$75 & \$100 \\
+MRR & \$25K & \$188K & \$800K \\
+Annual Revenue & \$300K & \$2.25M & \$9.6M \\
+Operating Costs & \$800K & \$1.5M & \$3M \\
+Net Income & -\$500K & +\$750K & +\$6.6M \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Optimistic Scenario (Lower probability)}
+
+Table~\ref{tab:optimistic} presents the optimistic financial scenario.
+
+\begin{table}[htbp]
+\centering
+\caption{Optimistic Financial Scenario}
+\label{tab:optimistic}
+\begin{tabular}{lrrr}
+\hline
+\textbf{Metric} & \textbf{Year 1} & \textbf{Year 2} & \textbf{Year 3} \\
+\hline
+Paying Users & 1,000 & 5,000 & 20,000 \\
+ARPU (\$/month) & \$75 & \$100 & \$150 \\
+MRR & \$75K & \$500K & \$3M \\
+Annual Revenue & \$900K & \$6M & \$36M \\
+Operating Costs & \$1M & \$2.5M & \$8M \\
+Net Income & -\$100K & +\$3.5M & +\$28M \\
+\hline
+\end{tabular}
+\end{table}
+
+\paragraph{Key Assumptions}
+
+Scenarios reflect different market penetration rates and pricing power. Operating costs scale with growth but benefit from economies of scale. The conservative scenario assumes minimal group-buying contribution. All scenarios assume primary revenue from SaaS and transaction fees. CPT incentive costs are included in operating costs.
+
+\paragraph{Funding Requirements}
+
+Seed/Angel funding of \$500K--1M will cover Year 1 losses and product development. Series A funding of \$3--5M is planned for Year 2, if base case trajectory is confirmed. Series B funding of \$10--20M is planned for Year 3+, for international expansion.
+
+\paragraph{Break-even Analysis}
+
+Conservative scenario reaches break-even in Month 30--36. Base Case reaches break-even in Month 18--24. Optimistic scenario reaches break-even in Month 12--18.
+
+This range provides investors with realistic expectations while demonstrating scalability potential.

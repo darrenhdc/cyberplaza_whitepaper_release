@@ -1,0 +1,95 @@
+name: main-translate-and-publish
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+concurrency:
+  group: publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  translate_and_commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    env:
+      DOUBAO_URL: ${{ secrets.DOUBAO_URL }}
+      DOUBAO_KEY: ${{ secrets.DOUBAO_KEY }}
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      BOT_SKIP_TOKEN: "[ci skip translate]"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install deps
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq texlive-xetex texlive-latex-extra biber fontconfig
+
+      - name: Run full translate (SC)
+        run: |
+          export API_TYPE=doubao
+          ./scripts/translate_sc.sh || true
+
+      - name: Run full translate (TC)
+        run: |
+          export API_TYPE=doubao
+          ./scripts/translate_tc.sh || true
+
+      - name: Commit translations if changed
+        env:
+          GITHUB_PAT_BOT: ${{ secrets.GITHUB_PAT_BOT }}
+        run: |
+          git config user.name "cyberplaza-bot"
+          git config user.email "bot@example.com"
+          git add cyberplaza_whitepaper/mainmatter_sc cyberplaza_whitepaper/mainmatter_tc || true
+          changes=$(git status --porcelain)
+          if [ -n "$changes" ]; then
+            # Add skip token to avoid re-triggering CI
+            git commit -m "Auto translate: update mainmatter_sc/mainmatter_tc ${BOT_SKIP_TOKEN}" || true
+            git push https://x-access-token:${GITHUB_PAT_BOT}@github.com/${{ github.repository }} HEAD:main
+          else
+            echo "No translation changes to push"
+          fi
+
+  compile_and_publish:
+    needs: translate_and_commit
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup TeX
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y jq texlive-xetex texlive-latex-extra biber fontconfig
+
+      - name: Compile EN/SC/TC
+        run: |
+          ./scripts/compile_en.sh || true
+          ./scripts/compile_sc.sh || true
+          ./scripts/compile_tc.sh || true
+
+      - name: Upload final PDFs as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: final-pdfs-${{ github.run_id }}
+          path: |
+            cyberplaza_whitepaper/report_en.pdf
+            cyberplaza_whitepaper/report_sc.pdf
+            cyberplaza_whitepaper/report_tc.pdf
+
+      - name: Deploy to gh-pages (optional)
+        if: ${{ secrets.GITHUB_PAT_BOT != '' }}
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_PAT_BOT }}
+          publish_dir: ./cyberplaza_whitepaper
+          destination_dir: docs
