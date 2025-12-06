@@ -43,6 +43,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Detect changed mainmatter tex
+        id: changed
+        run: |
+          # Compare with previous commit; if empty (e.g., first commit), fall back to all
+          CHANGED=$(git diff --name-only HEAD^ HEAD -- cyberplaza_whitepaper/mainmatter/*.tex || true)
+          if [ -z "$CHANGED" ]; then
+            CHANGED=$(ls cyberplaza_whitepaper/mainmatter/*.tex)
+          fi
+          echo "files=${CHANGED}" >> $GITHUB_OUTPUT
+
       - name: Install deps
         run: |
           sudo apt-get update -y
@@ -63,19 +73,22 @@ jobs:
           echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
           echo "push_on_dispatch=$PUSH_ON_DISPATCH" >> $GITHUB_OUTPUT
 
-      - name: Full translate (Simplified)
+      - name: Incremental translate (Simplified)
         run: |
           export SC_DIR="${GITHUB_WORKSPACE}/cyberplaza_whitepaper/mainmatter_sc"
-          # Use test mode when dry_run == 'true' to avoid API calls
           if [ "${{ steps.vars.outputs.dry_run }}" = "true" ]; then
             export API_TYPE=test
           else
             export API_TYPE=${{ steps.vars.outputs.api_type }}
           fi
           export MODEL="${TRANSLATE_MODEL_SC:-doubao-seed-code-preview-latest}"
-          ./scripts/translate_sc.sh || true
+          echo "Translating files (SC): ${{ steps.changed.outputs.files }}"
+          echo "${{ steps.changed.outputs.files }}" | tr ' ' '\n' | while read -r f; do
+            [ -z "$f" ] && continue
+            ./scripts/translate_sc.sh "$f" || true
+          done
 
-      - name: Full translate (Traditional)
+      - name: Incremental translate (Traditional)
         run: |
           export TC_DIR="${GITHUB_WORKSPACE}/cyberplaza_whitepaper/mainmatter_tc"
           if [ "${{ steps.vars.outputs.dry_run }}" = "true" ]; then
@@ -84,7 +97,11 @@ jobs:
             export API_TYPE=${{ steps.vars.outputs.api_type }}
           fi
           export MODEL="${TRANSLATE_MODEL_TC:-doubao-seed-code-preview-latest}"
-          ./scripts/translate_tc.sh || true
+          echo "Translating files (TC): ${{ steps.changed.outputs.files }}"
+          echo "${{ steps.changed.outputs.files }}" | tr ' ' '\n' | while read -r f; do
+            [ -z "$f" ] && continue
+            ./scripts/translate_tc.sh "$f" || true
+          done
 
       - name: Push translations (BOT PAT)
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.push == 'true' }}
