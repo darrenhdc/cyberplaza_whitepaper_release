@@ -51,7 +51,11 @@ jobs:
           if [ -z "$CHANGED" ]; then
             CHANGED=$(ls cyberplaza_whitepaper/mainmatter/*.tex)
           fi
-          echo "files=${CHANGED}" >> $GITHUB_OUTPUT
+          {
+            echo 'files<<EOF'
+            echo "$CHANGED"
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
 
       - name: Install deps
         run: |
@@ -83,7 +87,7 @@ jobs:
           fi
           export MODEL="${TRANSLATE_MODEL_SC:-doubao-seed-code-preview-latest}"
           echo "Translating files (SC): ${{ steps.changed.outputs.files }}"
-          echo "${{ steps.changed.outputs.files }}" | tr ' ' '\n' | while read -r f; do
+          printf '%s\n' "${{ steps.changed.outputs.files }}" | while IFS= read -r f; do
             [ -z "$f" ] && continue
             ./scripts/translate_sc.sh "$f" || true
           done
@@ -98,7 +102,7 @@ jobs:
           fi
           export MODEL="${TRANSLATE_MODEL_TC:-doubao-seed-code-preview-latest}"
           echo "Translating files (TC): ${{ steps.changed.outputs.files }}"
-          echo "${{ steps.changed.outputs.files }}" | tr ' ' '\n' | while read -r f; do
+          printf '%s\n' "${{ steps.changed.outputs.files }}" | while IFS= read -r f; do
             [ -z "$f" ] && continue
             ./scripts/translate_tc.sh "$f" || true
           done
