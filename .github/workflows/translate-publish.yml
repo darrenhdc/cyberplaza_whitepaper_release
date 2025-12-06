@@ -1,5 +1,8 @@
 name: main-translate-and-publish
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ main ]
@@ -93,8 +96,6 @@ jobs:
   compile_and_publish:
     needs: translate_and_commit
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
         with:
@@ -124,7 +125,7 @@ jobs:
         if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.push == 'true' }}
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.CYBERPLAZA_BOT_PAT }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./cyberplaza_whitepaper
           destination_dir: docs
