@@ -2,9 +2,9 @@
 
 %% Set up the bibliography
 \usepackage{ctex}
-% \usepackage{CJKutf8}
-\setCJKmainfont{Songti TC} % 宋体
-\setCJKsansfont{Heiti TC} % 黑体
+% 使用可在 CI 中获取的开源字体，避免系统字体缺失导致乱码
+\setCJKmainfont{Noto Serif CJK TC}
+\setCJKsansfont{Noto Sans CJK TC}
 \usepackage{biblatex}
 \addbibresource{report.bib}
 
