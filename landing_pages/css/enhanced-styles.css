@@ -1,0 +1,43 @@
+/* Enhanced Fonts - 使用更常用的字体组合 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+:root {
+    --font-display: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-chinese: 'Noto Sans SC', 'Noto Sans TC', sans-serif;
+}
+
+/* Chinese Font */
+[data-lang="zh-CN"], [data-lang="zh-TW"] {
+    font-family: var(--font-chinese);
+}
+
+/* Language Switcher */
+.language-switcher {
+    display: flex;
+    gap: 8px;
+    margin-right: 12px;
+}
+
+.language-switcher button {
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.language-switcher button:hover {
+    background: rgba(0, 212, 255, 0.1);
+    border-color: rgba(0, 212, 255, 0.3);
+}
+
+.language-switcher button.active {
+    background: var(--gradient-primary);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}

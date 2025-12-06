@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberPlaza Network - Web3 Computing Marketplace</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/enhanced-styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <div class="logo">
+                    <span class="logo-cyber">CYBER</span><span class="logo-plaza">PLAZA</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home" data-translate="navHome">Home</a></li>
+                    <li><a href="#platform" data-translate="navPlatform">Platform</a></li>
+                    <li><a href="#tokenomics" data-translate="navTokenomics">Tokenomics</a></li>
+                    <li><a href="#ecosystem" data-translate="navEcosystem">Ecosystem</a></li>
+                    <li><a href="#roadmap" data-translate="navRoadmap">Roadmap</a></li>
+                    <li><a href="#team" data-translate="navTeam">Team</a></li>
+                </ul>
+        <div class="language-switcher">
+            <button data-lang="en" class="active">EN</button>
+            <button data-lang="zh-CN">简体中文</button>
+            <button data-lang="zh-TW">繁體中文</button>
+        </div>
+                <div class="nav-actions">
+                    <a href="whitepaper.html" class="btn-secondary" data-translate="btnWhitepaper">Whitepaper</a>
+                    <button class="btn-primary" data-translate="btnLaunchApp">Launch App</button>
+                </div>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <span class="badge-glow"></span>
+                        <span data-translate="heroBadge">Web3 Computing Revolution</span>
+                    </div>
+                    <h1 class="hero-title">
+                        <span data-translate="heroTitle1">Decentralized</span>
+                        <span class="gradient-text" data-translate="heroTitle2">Computing</span>
+                        <br><span data-translate="heroTitle3">Marketplace</span>
+                    </h1>
+                    <p class="hero-subtitle" data-translate="heroSubtitle">
+                        The Taobao & Pinduoduo of Computing Resources. Access unlimited computational power through a decentralized platform powered by blockchain technology.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="10000">0</div>
+                            <div class="stat-label" data-translate="statNodes">Computing Nodes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="500">0</div>
+                            <div class="stat-label" data-translate="statUsers">Active Users</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="99.9">0</div>
+                            <div class="stat-label" data-translate="statUptime">% Uptime</div>
+                        </div>
+                    </div>
+                    <div class="hero-buttons">
+                        <button class="btn-primary btn-large" data-translate="btnGetStarted">
+                            Get Started
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <button class="btn-glass btn-large" data-translate="btnWatchDemo">
+                            Watch Demo
+                            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                                <path d="M8 5L13 10L8 15V5Z" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card card-3d">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-icon">⚡</div>
+                            <h3 data-translate="serviceHPC">HPC Computing</h3>
+                            <p data-translate="serviceHPCDesc">High Performance</p>
+                        </div>
+                    </div>
+                    <div class="floating-card card-3d" style="animation-delay: 0.5s;">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-icon">🤖</div>
+                            <h3 data-translate="serviceAI">AI Computing</h3>
+                            <p data-translate="serviceAIDesc">Machine Learning</p>
+                        </div>
+                    </div>
+                    <div class="floating-card card-3d" style="animation-delay: 1s;">
+                        <div class="card-glow"></div>
+                        <div class="card-content">
+                            <div class="card-icon">☁️</div>
+                            <h3 data-translate="serviceCloud">Cloud Storage</h3>
+                            <p data-translate="serviceCloudDesc">Distributed Data</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- Platform Features -->
+    <section id="platform" class="platform">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-translate="sectionPlatform">Platform</span>
+                <h2 class="section-title">
+                    <span data-translate="platformTitle">Revolutionizing</span> <span class="gradient-text" data-translate="platformTitle2">Computing Access</span>
+                </h2>
+                <p class="section-subtitle" data-translate="platformSubtitle">
+                    A decentralized marketplace connecting computing resource providers with users worldwide
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="20" stroke="url(#grad1)" stroke-width="2"/>
+                            <path d="M24 12V24L32 28" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="grad1" x1="0" y1="0" x2="48" y2="48">
+                                    <stop stop-color="#00D4FF"/>
+                                    <stop offset="1" stop-color="#0052FF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title" data-translate="feature1Title">Instant Access</h3>
+                    <p class="feature-description" data-translate="feature1Desc">
+                        Deploy computing resources in seconds with our one-click marketplace interface
+                    </p>
+                </div>
+
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect x="12" y="12" width="24" height="24" rx="4" stroke="url(#grad2)" stroke-width="2"/>
+                            <path d="M20 24L23 27L28 21" stroke="url(#grad2)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="grad2" x1="0" y1="0" x2="48" y2="48">
+                                    <stop stop-color="#00D4FF"/>
+                                    <stop offset="1" stop-color="#0052FF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title" data-translate="feature2Title">USDC Payments</h3>
+                    <p class="feature-description" data-translate="feature2Desc">
+                        Transparent, stable payments using USDC with zero volatility risk
+                    </p>
+                </div>
+
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="16" r="8" stroke="url(#grad3)" stroke-width="2"/>
+                            <path d="M12 32C12 26.4772 16.4772 22 22 22H26C31.5228 22 36 26.4772 36 32" stroke="url(#grad3)" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="grad3" x1="0" y1="0" x2="48" y2="48">
+                                    <stop stop-color="#00D4FF"/>
+                                    <stop offset="1" stop-color="#0052FF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title" data-translate="feature3Title">Group Buying Power</h3>
+                    <p class="feature-description" data-translate="feature3Desc">
+                        Leverage collective purchasing for competitive pricing and bulk discounts
+                    </p>
+                </div>
+
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <path d="M12 24L20 16M20 16L28 24M20 16V36" stroke="url(#grad4)" stroke-width="2" stroke-linecap="round"/>
+                            <path d="M28 20L36 28M36 28L28 36M36 28H16" stroke="url(#grad4)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="grad4" x1="0" y1="0" x2="48" y2="48">
+                                    <stop stop-color="#00D4FF"/>
+                                    <stop offset="1" stop-color="#0052FF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title" data-translate="feature4Title">Multi-Resource Support</h3>
+                    <p class="feature-description" data-translate="feature4Desc">
+                        CPU, GPU, FPGA, storage - all computing resources in one platform
+                    </p>
+                </div>
+
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <rect x="16" y="12" width="16" height="8" rx="2" stroke="url(#grad5)" stroke-width="2"/>
+                            <rect x="12" y="24" width="24" height="8" rx="2" stroke="url(#grad5)" stroke-width="2"/>
+                            <rect x="16" y="36" width="16" height="8" rx="2" stroke="url(#grad5)" stroke-width="2"/>
+                            <defs>
+                                <linearGradient id="grad5" x1="0" y1="0" x2="48" y2="48">
+                                    <stop stop-color="#00D4FF"/>
+                                    <stop offset="1" stop-color="#0052FF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title" data-translate="feature5Title">Enterprise Grade</h3>
+                    <p class="feature-description" data-translate="feature5Desc">
+                        CHESS orchestration system with 20+ years of proven reliability
+                    </p>
+                </div>
+
+                <div class="feature-card glass-card">
+                    <div class="feature-icon">
+                        <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="12" stroke="url(#grad6)" stroke-width="2"/>
+                            <path d="M24 16V24H32" stroke="url(#grad6)" stroke-width="2" stroke-linecap="round"/>
+                            <defs>
+                                <linearGradient id="grad6" x1="0" y1="0" x2="48" y2="48">
+                                    <stop stop-color="#00D4FF"/>
+                                    <stop offset="1" stop-color="#0052FF"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <h3 class="feature-title" data-translate="feature6Title">Governance Rights</h3>
+                    <p class="feature-description" data-translate="feature6Desc">
+                        CPT holders participate in platform decisions and revenue distribution
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tokenomics Section -->
+    <section id="tokenomics" class="tokenomics">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-translate="sectionToken">CPT Token</span>
+                <h2 class="section-title">
+                    <span data-translate="tokenTitle">Sustainable</span> <span class="gradient-text" data-translate="tokenTitle2">Tokenomics</span>
+                </h2>
+                <p class="section-subtitle" data-translate="tokenSubtitle">
+                    Governance and utility token powering the CyberPlaza ecosystem
+                </p>
+            </div>
+
+            <div class="tokenomics-grid">
+                <div class="token-info glass-card">
+                    <h3 data-translate="tokenUtilTitle">Token Utilities</h3>
+                    <div class="utility-list">
+                        <div class="utility-item">
+                            <div class="utility-icon">🗳️</div>
+                            <div class="utility-content">
+                                <h4 data-translate="tokenUtil1">Governance Rights</h4>
+                                <p data-translate="tokenUtil1Desc">Vote on platform parameters and strategic decisions</p>
+                            </div>
+                        </div>
+                        <div class="utility-item">
+                            <div class="utility-icon">💰</div>
+                            <div class="utility-content">
+                                <h4 data-translate="tokenUtil2">Revenue Sharing</h4>
+                                <p data-translate="tokenUtil2Desc">Earn 6-10% APY through staking rewards in USDC</p>
+                            </div>
+                        </div>
+                        <div class="utility-item">
+                            <div class="utility-icon">🎁</div>
+                            <div class="utility-content">
+                                <h4 data-translate="tokenUtil3">Platform Discounts</h4>
+                                <p data-translate="tokenUtil3Desc">5-15% discount on all platform services</p>
+                            </div>
+                        </div>
+                        <div class="utility-item">
+                            <div class="utility-icon">🔥</div>
+                            <div class="utility-content">
+                                <h4 data-translate="tokenUtil4">Deflationary Model</h4>
+                                <p data-translate="tokenUtil4Desc">20% revenue allocated to buyback & burn</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="token-distribution glass-card">
+                    <h3 data-translate="tokenDistTitle">Revenue Distribution</h3>
+                    <div class="distribution-chart">
+                        <div class="chart-item" style="--percent: 30; --color: #00D4FF;">
+                            <div class="chart-bar"></div>
+                            <div class="chart-label">
+                                <span class="chart-percent">30%</span>
+                                <span class="chart-name" data-translate="tokenDist1">Staking Rewards</span>
+                            </div>
+                        </div>
+                        <div class="chart-item" style="--percent: 35; --color: #0052FF;">
+                            <div class="chart-bar"></div>
+                            <div class="chart-label">
+                                <span class="chart-percent">35%</span>
+                                <span class="chart-name" data-translate="tokenDist2">Operations</span>
+                            </div>
+                        </div>
+                        <div class="chart-item" style="--percent: 20; --color: #667EEA;">
+                            <div class="chart-bar"></div>
+                            <div class="chart-label">
+                                <span class="chart-percent">20%</span>
+                                <span class="chart-name" data-translate="tokenDist3">Buyback & Burn</span>
+                            </div>
+                        </div>
+                        <div class="chart-item" style="--percent: 10; --color: #16A085;">
+                            <div class="chart-bar"></div>
+                            <div class="chart-label">
+                                <span class="chart-percent">10%</span>
+                                <span class="chart-name" data-translate="tokenDist4">Team</span>
+                            </div>
+                        </div>
+                        <div class="chart-item" style="--percent: 5; --color: #FFD700;">
+                            <div class="chart-bar"></div>
+                            <div class="chart-label">
+                                <span class="chart-percent">5%</span>
+                                <span class="chart-name" data-translate="tokenDist5">Reserves</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="revenue-streams">
+                <h3 class="streams-title" data-translate="streamsTitle">Platform Revenue Streams</h3>
+                <div class="streams-grid">
+                    <div class="stream-card glass-card">
+                        <div class="stream-percentage">40-50%</div>
+                        <div class="stream-name" data-translate="stream1">SaaS Subscriptions</div>
+                        <p data-translate="stream1Desc">Monthly/annual platform access</p>
+                    </div>
+                    <div class="stream-card glass-card">
+                        <div class="stream-percentage">25-30%</div>
+                        <div class="stream-name" data-translate="stream2">Transaction Fees</div>
+                        <p data-translate="stream2Desc">2-5% on resource purchases</p>
+                    </div>
+                    <div class="stream-card glass-card">
+                        <div class="stream-percentage">15-20%</div>
+                        <div class="stream-name" data-translate="stream3">API & Data Services</div>
+                        <p data-translate="stream3Desc">Premium access & analytics</p>
+                    </div>
+                    <div class="stream-card glass-card">
+                        <div class="stream-percentage">5-10%</div>
+                        <div class="stream-name" data-translate="stream4">Group-Buying</div>
+                        <p data-translate="stream4Desc">Bulk purchasing margins</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ecosystem Section -->
+    <section id="ecosystem" class="ecosystem">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-translate="sectionEcosystem">Ecosystem</span>
+                <h2 class="section-title">
+                    <span data-translate="ecosystemTitle">Complete</span> <span class="gradient-text" data-translate="ecosystemTitle2">Computing Ecosystem</span>
+                </h2>
+            </div>
+
+            <div class="ecosystem-diagram">
+                <div class="ecosystem-center glass-card">
+                    <div class="center-glow"></div>
+                    <h3 data-translate="ecoPlatform">CyberPlaza<br>Platform</h3>
+                </div>
+                
+                <div class="ecosystem-node glass-card" style="--angle: 0deg;">
+                    <h4 data-translate="ecoUsers">Users</h4>
+                    <p data-translate="ecoUsersDesc">Access resources</p>
+                </div>
+                <div class="ecosystem-node glass-card" style="--angle: 60deg;">
+                    <h4 data-translate="ecoProviders">Service Providers</h4>
+                    <p data-translate="ecoProvidersDesc">List resources</p>
+                </div>
+                <div class="ecosystem-node glass-card" style="--angle: 120deg;">
+                    <h4 data-translate="ecoLiquidity">Liquidity Providers</h4>
+                    <p data-translate="ecoLiquidityDesc">Earn yield</p>
+                </div>
+                <div class="ecosystem-node glass-card" style="--angle: 180deg;">
+                    <h4 data-translate="ecoStakers">CPT Stakers</h4>
+                    <p data-translate="ecoStakersDesc">Governance & rewards</p>
+                </div>
+                <div class="ecosystem-node glass-card" style="--angle: 240deg;">
+                    <h4 data-translate="ecoDevelopers">Developers</h4>
+                    <p data-translate="ecoDevelopersDesc">Build on platform</p>
+                </div>
+                <div class="ecosystem-node glass-card" style="--angle: 300deg;">
+                    <h4 data-translate="ecoPartners">Partners</h4>
+                    <p data-translate="ecoPartnersDesc">Integrate services</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="roadmap">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-translate="sectionRoadmap">Timeline</span>
+                <h2 class="section-title">
+                    <span data-translate="roadmapTitle">Development</span> <span class="gradient-text" data-translate="roadmapTitle2">Roadmap</span>
+                </h2>
+            </div>
+
+            <div class="roadmap-timeline">
+                <div class="timeline-item glass-card">
+                    <div class="timeline-badge">Q1 2026</div>
+                    <h3 data-translate="roadmap1">Platform Foundation</h3>
+                    <ul>
+                        <li data-translate="roadmap1a">Beta platform launch</li>
+                        <li data-translate="roadmap1b">Initial service provider onboarding</li>
+                        <li data-translate="roadmap1c">CPT token generation event</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item glass-card">
+                    <div class="timeline-badge">Q2 2026</div>
+                    <h3 data-translate="roadmap2">Marketplace Expansion</h3>
+                    <ul>
+                        <li data-translate="roadmap2a">Full marketplace deployment</li>
+                        <li data-translate="roadmap2b">Staking mechanism launch</li>
+                        <li data-translate="roadmap2c">Mobile app release</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item glass-card">
+                    <div class="timeline-badge">Q3 2026</div>
+                    <h3 data-translate="roadmap3">Ecosystem Growth</h3>
+                    <ul>
+                        <li data-translate="roadmap3a">Strategic partnerships</li>
+                        <li data-translate="roadmap3b">API & developer tools</li>
+                        <li data-translate="roadmap3c">Group-buying features</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item glass-card">
+                    <div class="timeline-badge">Q4 2026</div>
+                    <h3 data-translate="roadmap4">Global Scale</h3>
+                    <ul>
+                        <li data-translate="roadmap4a">International expansion</li>
+                        <li data-translate="roadmap4b">Advanced governance</li>
+                        <li data-translate="roadmap4c">Cross-chain integration</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="team">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge" data-translate="sectionTeam">Team</span>
+                <h2 class="section-title">
+                    <span data-translate="teamTitle">Expert</span> <span class="gradient-text" data-translate="teamTitle2">Leadership</span>
+                </h2>
+                <p class="section-subtitle" data-translate="teamSubtitle">
+                    30+ years of distributed computing experience
+                </p>
+            </div>
+
+            <div class="team-grid">
+                <div class="team-card glass-card">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">HC</div>
+                    </div>
+                    <h3 data-translate="team1">Core Team</h3>
+                    <p class="team-role" data-translate="team1Role">Distributed Computing Experts</p>
+                    <p class="team-description" data-translate="team1Desc">
+                        Extensive experience in HPC, cloud services, and blockchain technology
+                    </p>
+                </div>
+
+                <div class="team-card glass-card">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">AD</div>
+                    </div>
+                    <h3 data-translate="team2">Advisors</h3>
+                    <p class="team-role" data-translate="team2Role">Industry Leaders</p>
+                    <p class="team-description" data-translate="team2Desc">
+                        Strategic guidance from Web3 and computing industry veterans
+                    </p>
+                </div>
+
+                <div class="team-card glass-card">
+                    <div class="team-avatar">
+                        <div class="avatar-placeholder">FD</div>
+                    </div>
+                    <h3 data-translate="team3">Foundation</h3>
+                    <p class="team-role" data-translate="team3Role">Non-Profit Organization</p>
+                    <p class="team-description" data-translate="team3Desc">
+                        Ensuring long-term platform sustainability and governance
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content glass-card">
+                <h2 data-translate="ctaTitle">Ready to Join the Future of Computing?</h2>
+                <p data-translate="ctaDesc">Start accessing decentralized computing resources today</p>
+                <div class="cta-buttons">
+                    <button class="btn-primary btn-large" data-translate="btnLaunchPlatform">Launch Platform</button>
+                    <button class="btn-glass btn-large" data-translate="btnWhitepaper">Read Whitepaper</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="logo">
+                        <span class="logo-cyber">CYBER</span><span class="logo-plaza">PLAZA</span>
+                    </div>
+                    <p data-translate="footerDesc">Decentralized Computing Marketplace</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" data-translate="socialTwitter">Twitter</a>
+                        <a href="#" class="social-link" data-translate="socialDiscord">Discord</a>
+                        <a href="#" class="social-link" data-translate="socialTelegram">Telegram</a>
+                        <a href="#" class="social-link" data-translate="socialGitHub">GitHub</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4 data-translate="footerPlatform">Platform</h4>
+                        <a href="#" data-translate="footerFeatures">Features</a>
+                        <a href="#" data-translate="footerPricing">Pricing</a>
+                        <a href="#" data-translate="footerDocs">Documentation</a>
+                        <a href="#" data-translate="footerAPI">API</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-translate="footerResources">Resources</h4>
+                        <a href="#" data-translate="footerWhitepaper">Whitepaper</a>
+                        <a href="#" data-translate="footerBlog">Blog</a>
+                        <a href="#" data-translate="footerFAQ">FAQ</a>
+                        <a href="#" data-translate="footerSupport">Support</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4 data-translate="footerCompany">Company</h4>
+                        <a href="#" data-translate="footerAbout">About</a>
+                        <a href="#" data-translate="footerTeam">Team</a>
+                        <a href="#" data-translate="footerCareers">Careers</a>
+                        <a href="#" data-translate="footerContact">Contact</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p data-translate="footerCopyright">&copy; 2026 CyberPlaza Network. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#" data-translate="footerPrivacy">Privacy Policy</a>
+                    <a href="#" data-translate="footerTerms">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/language.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>

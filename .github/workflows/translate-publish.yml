@@ -161,3 +161,4 @@ jobs:
           publish_branch: gh-pages
           publish_dir: ./deploy/docs
           destination_dir: docs
+          keep_files: true

@@ -1,0 +1,33 @@
+name: deploy-landing
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'landing_pages/**'
+      - '.github/workflows/deploy-landing.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: landing-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Deploy landing_pages to gh-pages root
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./landing_pages
+          keep_files: true
