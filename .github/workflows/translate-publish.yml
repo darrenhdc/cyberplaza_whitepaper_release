@@ -52,7 +52,12 @@ jobs:
         id: vars
         run: |
           API_TYPE="${{ github.event.inputs.api_type || 'doubao' }}"
-          DRY_RUN="${{ github.event.inputs.dry_run || 'true' }}"
+          # Default: push events run real mode (dry_run=false); manual dispatch keeps default true unless overridden
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            DRY_RUN="${{ github.event.inputs.dry_run || 'true' }}"
+          else
+            DRY_RUN="false"
+          fi
           PUSH_ON_DISPATCH="${{ github.event.inputs.push || 'false' }}"
           echo "api_type=$API_TYPE" >> $GITHUB_OUTPUT
           echo "dry_run=$DRY_RUN" >> $GITHUB_OUTPUT
