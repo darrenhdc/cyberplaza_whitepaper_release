@@ -249,6 +249,61 @@ body {
     transition: all 0.3s;
 }
 
+/* Hamburger active state */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* Mobile menu */
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        left: -100%;
+        top: 70px;
+        flex-direction: column;
+        background-color: rgba(10, 14, 39, 0.98);
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.3);
+        padding: 20px 0;
+        z-index: 999;
+    }
+
+    .nav-menu.active {
+        left: 0;
+    }
+
+    .nav-menu li {
+        margin: 15px 0;
+    }
+
+    .nav-menu a {
+        font-size: 18px;
+    }
+
+    /* Language switcher on mobile */
+    .language-switcher {
+        order: -1;
+        margin-bottom: 15px;
+    }
+}
+
+/* === Responsive Container Padding === */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+}
+
 /* === Hero Section === */
 .hero {
     min-height: 100vh;
@@ -258,6 +313,28 @@ body {
     padding-top: 100px;
     overflow: hidden;
 }
+
+/* Whitepaper page hero padding for mobile */
+@media (max-width: 768px) {
+    .hero[style*="padding: 150px"] {
+        padding: 80px 0 !important;
+    }
+
+    /* Optimize buttons on mobile */
+    .btn-primary,
+    .btn-secondary,
+    .btn-glass {
+        padding: 12px 24px;
+        font-size: 13px;
+    }
+
+    /* Button container on whitepaper page */
+    .hero .hero-text div {
+        gap: 12px !important;
+        margin-top: 40px !important;
+    }
+}
+
 
 .hero-bg {
     position: absolute;
