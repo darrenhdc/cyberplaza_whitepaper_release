@@ -1,0 +1,97 @@
+\documentclass{layout/epfl-report}
+
+%% Set up the bibliography
+\usepackage{ctex}
+
+\usepackage{biblatex}
+\addbibresource{report.bib}
+
+%% Additional packages and commands
+\setlist{itemsep=-2pt} % Reducing white space in lists slightly
+\renewcommand{\deg}{\si{\degree}\xspace} % Use \deg easily, everywhere
+
+%% ----------------------------------------------------------------------
+%%    Begin of document + Frontmatter (Roman page numbering)
+%% ----------------------------------------------------------------------
+
+\begin{document}
+
+\frontmatter
+
+%% Define the main parameters
+\title{The Web3 CyberPlaza Network}
+\subtitle{Empowering Computility as a Real World Asset with a Business Model Inspired by Taobao and Pinduoduo}
+\author{CyberPlaza Labs }
+
+\subject{} % Cover only
+\affiliation{HKSTP} % Cover only
+\coverimage{figures/rlc-cover2.jpg} % Aspect ratio of 2:3 (portrait) recommended
+\definecolor{title}{HTML}{00FFFF} % Color for cover title
+
+\makecover
+
+% \input{frontmatter/title-report}
+% \input{frontmatter/preface}
+% \input{frontmatter/summary}
+
+%% Redefine TOC titles to English (override ctex Chinese defaults)
+\renewcommand{\contentsname}{Table of Contents}
+\renewcommand{\listfigurename}{List of Figures}
+\renewcommand{\listtablename}{List of Tables}
+\renewcommand{\bibname}{References}
+\renewcommand{\indexname}{Index}
+\renewcommand{\figurename}{Figure}
+\renewcommand{\tablename}{Table}
+\renewcommand{\partname}{Part}
+\renewcommand{\chaptername}{Chapter}
+\renewcommand{\appendixname}{Appendix}
+
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+% \input{frontmatter/nomenclature}
+
+%% ----------------------------------------------------------------------
+%%    Mainmatter (Arabic page numbering)
+%% ----------------------------------------------------------------------
+
+\mainmatter
+
+\input{mainmatter_sc/chapter-1}
+
+\input{mainmatter_sc/chapter-2}
+\input{mainmatter_sc/chapter-3}
+\input{mainmatter_sc/chapter-4}
+\input{mainmatter_sc/chapter-5}
+\input{mainmatter_sc/chapter-6}
+\input{mainmatter_sc/chapter-7}
+\input{mainmatter_sc/chapter-8}
+\input{mainmatter_sc/chapter-9}
+\input{mainmatter_sc/chapter-10}
+\input{mainmatter_sc/chapter-11}
+\input{mainmatter_sc/chapter-12}
+
+
+
+
+
+%% Prevent urls running into margins in bibliography
+\setcounter{biburlnumpenalty}{7000}
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{7000}
+
+%% Add bibliography
+\printbibliography[heading=bibintoc,title=References]
+
+%% ----------------------------------------------------------------------
+%%    Appendix (Letters for chapters)
+%% ----------------------------------------------------------------------
+
+\appendix
+
+% \input{appendix/appendix-a}
+% \input{appendix/appendix-b}
+%\input{appendix/appendix-c} % Create file to add
+
+\end{document}
