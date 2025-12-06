@@ -44,7 +44,7 @@ jobs:
       - name: Install deps
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y jq texlive-xetex texlive-latex-extra biber fontconfig
+          sudo apt-get install -y jq texlive-xetex texlive-latex-extra texlive-science biber fontconfig
 
       - name: Prepare API_TYPE and DRY_RUN flags
         id: vars
@@ -104,13 +104,19 @@ jobs:
       - name: Setup TeX
         run: |
           sudo apt-get update -y
-          sudo apt-get install -y jq texlive-xetex texlive-latex-extra biber fontconfig
+          sudo apt-get install -y jq texlive-xetex texlive-latex-extra texlive-science biber fontconfig
 
       - name: Compile EN/SC/TC
         run: |
           ./scripts/compile_en.sh || true
           ./scripts/compile_sc.sh || true
           ./scripts/compile_tc.sh || true
+
+      - name: Prepare deployment directory
+        run: |
+          mkdir -p ./deploy/docs
+          cp -r ./cyberplaza_whitepaper/* ./deploy/docs/ 2>/dev/null || true
+          cp -r ./webpage/* ./deploy/docs/ 2>/dev/null || true
           ls -lh cyberplaza_whitepaper | grep -i pdf || true
 
       - name: Create index.html for GitHub Pages
@@ -144,5 +150,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./cyberplaza_whitepaper
+          publish_dir: ./deploy/docs
           destination_dir: docs
