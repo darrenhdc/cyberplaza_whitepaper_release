@@ -140,20 +140,21 @@ flowchart TD
 ### CI/CD 流程概览（当前配置）
 - 发布流水线：`translate-publish.yml`
    - 触发：推送到 `main`，或手动 workflow_dispatch（参数：`dry_run` 默认 true、`api_type` 默认 doubao、`push` 默认 false）。
+   - 翻译：仅当英文 `cyberplaza_whitepaper/mainmatter/*.tex` 有改动时才调用翻译；无英文改动则直接跳过翻译，避免全量耗时。翻译结果默认不回写仓库，除非 `push`=true 且有变更。
    - 依赖：`jq`、`texlive-xetex`、`texlive-latex-extra`、`texlive-lang-chinese`、`texlive-science`、`biber`、`fontconfig`。
-   - Job 1 `translate_and_commit`：根据 `api_type` 选择翻译后端（默认为豆包，`DOUBAO_URL=https://ark.cn-beijing.volces.com/api/coding/v3`，模型从 `TRANSLATE_MODEL_SC/TC` secret 读取），执行 `translate_sc.sh` / `translate_tc.sh`；当 push 允许且有改动时用 `CYBERPLAZA_BOT_PAT` 推回 `main`。
-   - Job 2 `compile_and_publish`：再次安装 TeX 依赖，执行 `compile_en.sh`、`compile_sc.sh`、`compile_tc.sh`，上传 `report_en/sc/tc.pdf` 为 artifact，并将 `cyberplaza_whitepaper` 与 `webpage` 内容发布到 `gh-pages/docs`（Pages 根路径为 `/docs/`）。生成的访问示例：`https://darrenhdc.github.io/cyberplaza_whitepaper_release/docs/report_en.pdf` 等。
+   - Job 1 `translate_and_commit`：根据 `api_type` 选择翻译后端（默认豆包，`DOUBAO_URL=https://ark.cn-beijing.volces.com/api/coding/v3`，模型从 `TRANSLATE_MODEL_SC/TC` secret 读取），执行 `translate_sc.sh` / `translate_tc.sh`；当 push 允许且有改动时用 `CYBERPLAZA_BOT_PAT` 推回 `main`。
+   - Job 2 `compile_and_publish`：安装 TeX 依赖，执行 `compile_en.sh`、`compile_sc.sh`、`compile_tc.sh`，上传 `report_en/sc/tc.pdf` 为 artifact，并将 `cyberplaza_whitepaper` 与 `webpage` 内容发布到 `gh-pages/docs`（Pages 根路径为 `/docs/`）。示例：`https://darrenhdc.github.io/cyberplaza_whitepaper_release/docs/report_en.pdf`。
 
 - 预览流水线：`translate-preview.yml`
    - 触发：PR 的 opened/synchronize/reopened。
-   - 逻辑：检测 `cyberplaza_whitepaper/mainmatter/*.tex` 改动，仅对改动文件运行翻译，强制 `API_TYPE=test`（不调用外部接口），编译 SC/TC 预览，上传 artifact，并在 PR 评论给出下载链接。
+   - 逻辑：仅对 PR 中改动的英文 `mainmatter/*.tex` 做增量翻译，强制 `API_TYPE=test`（无外部接口），编译 SC/TC 预览，上传 artifact，并在 PR 评论给出下载链接。
 
 - 主要 Secrets（Actions 环境）：`DOUBAO_URL`（v3 路径）、`DOUBAO_KEY`、`TRANSLATE_MODEL_SC`、`TRANSLATE_MODEL_TC`、`CYBERPLAZA_BOT_PAT`（推回 main 时需要）、可选 `OPENAI_API_KEY`（若切换 openai 后端）；`GITHUB_TOKEN` 用于 Pages 发布。
 
 ### 翻译/编译行为速记
-- 修改英文 `.tex` 并 push：流水线会自动翻译并编译 PDF，但生成的中文 `.tex` 只在 CI 工作区使用，不会自动提交回仓库；如需保留翻译结果，需手动提交。
-- 修改中文 `.tex` 并 push：仍会触发编译，生成的 PDF 直接使用你提交的中文内容，英文未变时翻译环节基本不会产出新文件。
-- 增量翻译（预览工作流）：仅对变更的英文章节做翻译；无改动的部分沿用缓存/上次结果。
+- 修改英文 `.tex` 并 push：发布流水线检测到英文改动才翻译，否则跳过；生成的中文 `.tex` 仅在 CI 工作区使用，不会自动提交（除非显式允许 push 且有变更）。
+- 修改中文 `.tex` 并 push：翻译跳过，但编译仍运行，PDF 直接反映中文改动。
+- 预览流水线：仅 PR 中改动的英文文件会被增量翻译，且使用测试后端（不出网）。
 
 ## 贡献
 
