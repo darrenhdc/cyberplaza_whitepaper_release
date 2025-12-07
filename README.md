@@ -156,6 +156,13 @@ flowchart TD
 - 修改中文 `.tex` 并 push：翻译跳过，但编译仍运行，PDF 直接反映中文改动。
 - 预览流水线：仅 PR 中改动的英文文件会被增量翻译，且使用测试后端（不出网）。
 
+### 常见问答（CI/CD）
+- 英文改了、push 到 main，会发生什么？→ 发布流水线运行：翻译 SC/TC（因检测到英文改动），编译 EN/SC/TC，上传 artifacts，部署 Pages；中文 `.tex` 默认不回写仓库。
+- 只改中文并 push，会怎样？→ 翻译跳过，直接编译并生成新的 PDF，流水线不会回写仓库。
+- 想让翻译结果回推仓库怎么办？→ 在 Actions 手动触发 `main-translate-and-publish` 时将参数 `push` 设为 `true`（默认 `false`）。正常 git push 不带这个参数。
+- 会不会死循环？→ 流水线对 bot 推送和含 `[ci skip translate]` 的提交做了跳过翻译的保护，并使用 concurrency 组，避免自触发无限循环。
+- PR 会触发吗？→ 预览流水线 `translate-preview.yml` 在 PR opened/synchronize/reopened 时触发，使用增量翻译和测试后端，仅生成预览 artifacts，不回写仓库。
+
 ## 贡献
 
 1. 修改英文源文件 (`cyberplaza_whitepaper/mainmatter/`)
