@@ -1,28 +1,24 @@
-%% TEST TRANSLATION - AutoTranslated (placeholder)
+\chapter{技术与架构}
 
-\chapter{Technology and Architecture}
+\section{项目治理基础设施}
 
+\subsection{概述}
 
+CyberPlaza网络由CyberPlaza基金会和CyberPlaza社区组成。
 
-\section{Project Governing Infrastructures}
+CyberPlaza基金会是一个非营利性去中心化组织，致力于CyberPlaza平台的成功运营、计算技术和应用的推广与发展，以及支持平台上的去中心化社区建设和发展。基金会由CyberPlaza社区的CPT持有者拥有和控制。基金会由网络核心成员（见白皮书第8节）和基金会根据需要不时任命的顾问运营。基金会将设立CyberPlaza实验室，负责开发和研究新的计算资源技术和应用，以推动平台所需的技术创新和进步。
 
-\subsection{General Description}
+CyberPlaza社区是网络的社区部分，由流动性提供者、用户和服务提供商（SP）组成，他们共同参与基金会治理、开发和推广。社区成员可以通过参与治理、向基金会提出业务方向、技术发展建议以及交流和分享经验来促进平台的发展和成长。
 
-CyberPlaza Network consists of CyberPlaza Foundation and CyberPlaza Community.
+CyberPlaza基金会与CyberPlaza社区之间的紧密联系对于实现网络的愿景和使命至关重要。
 
-CyberPlaza Foundation is a non-profit decentralized organization dedicated to the successful operation of the CyberPlaza Platform, the promotion and development of computing technologies and applications, and supporting decentralized community building and development on the platform. The Foundation is owned and controlled by the CPT holders in the CyberPlaza Community. The Foundation is run by the Core members of the Network (See Sec. 8 of the White Paper) and Advisors appointed by the Foundation from time to time as needed. The Foundation will establish CyberPlaza Labs responsible for developing and researching new computing resource technologies and applications to promote technological innovation and progress needed by the platform.
+\subsection{智能合约模块}
 
-CyberPlaza Community is the community section of the Network, composed of the Liquidity Providers, Users, and SPs, who participate in Foundation governance, development, and promotion together. Community members can promote the development and growth of the Platform by participating in governance, making proposals to the Foundation on business directions, technology developments and in exchanging and sharing experiences.
+我们将在Arbitrum（以太坊Layer 2）上部署符合ERC20标准的CPT智能合约，选择Arbitrum是因其低交易成本和高吞吐量。平台还将根据生态系统扩展的需要桥接至其他区块链。
 
-The tight connection between the CyberPlaza Foundation and the CyberPlaza Community is essential in achieving the Vision and Mission of the Network.
+CPT代币合约包含以下关键功能：标准ERC20功能（转账、授权等）、用于veToken机制的质押和锁仓功能、治理投票集成、奖励分配机制、治理控制的紧急暂停功能，以及用于未来增强的可升级代理模式。
 
-\subsection{Smart Contract Modules}
-
-We will deploy CPT as an ERC20-compliant smart contract on Arbitrum (Layer 2 of Ethereum), chosen for its low transaction costs and high throughput. The platform will also bridge to other chains as needed for ecosystem expansion.
-
-The CPT token contract includes the following key features: Standard ERC20 functionality (transfer, approve, etc.), staking and lock functions for veToken mechanism, governance voting integration, reward distribution mechanisms, emergency pause functionality (governance-controlled), and upgradeable proxy pattern for future enhancements.
-
-\textbf{Note}: The platform uses USDC directly for payments, eliminating the need for a proprietary stablecoin and associated regulatory risks.
+\textbf{注意}：平台直接使用USDC进行支付，无需专有稳定币及相关监管风险。
 
 \begin{verbatim}
 // SPDX-License-Identifier: MIT
@@ -91,293 +87,271 @@ contract CPTToken is ERC20 {
 }
 \end{verbatim}
 
-\subsection{Token Standard and Decimal Handling}
+\subsection{代币标准与小数处理}
 
-The CPT token adheres to the standard ERC20 specification with 18 decimals, while USDC operates with 6 decimals. The platform employs SafeMath libraries for all conversion operations to prevent overflow and underflow errors. Price oracles incorporate decimal normalization logic, and minimum transaction thresholds mitigate dust attack vectors. For fractional amounts, the protocol implements conservative rounding mechanisms.
+CPT代币遵循标准ERC20规范，采用18位小数，而USDC采用6位小数。平台对所有转换操作使用SafeMath库，以防止溢出和下溢错误。价格预言机整合了小数归一化逻辑，最小交易阈值可缓解粉尘攻击向量。对于分数金额，协议实施保守的四舍五入机制。
 
-\subsection{Vote-Escrowed Token Mechanism}
+\subsection{锁仓投票代币机制}
 
-The platform implements a vote-escrowed (ve) token model to align long-term stakeholder incentives. Users lock CPT for periods ranging from one week to four years, receiving non-transferable veCPT tokens that determine both governance weight and reward allocation.
+平台采用锁仓投票（ve）代币模型，以对齐长期利益相关者的激励。用户将CPT锁仓1周至4年，获得不可转让的veCPT代币，该代币决定治理权重和奖励分配。
 
-The veCPT balance follows the relationship:
+veCPT余额遵循以下关系：
 \begin{equation}
 \text{veCPT} = \text{CPT}_{\text{locked}} \times \min\left(\frac{t_{\text{lock}}}{t_{\text{max}}}, 1\right) \times 2.5
 \end{equation}
-where $t_{\text{lock}}$ represents the chosen lock duration and $t_{\text{max}} = 4$ years defines the maximum lock period. The multiplier of 2.5 provides maximum governance weight for four-year commitments.
+其中$t_{\text{lock}}$表示选择的锁仓时长，$t_{\text{max}} = 4$年定义了最大锁仓周期。2.5的乘数为4年期承诺提供了最大治理权重。
 
-As the lock period approaches expiration, veCPT balance decays linearly:
+随着锁仓周期接近到期，veCPT余额线性衰减：
 \begin{equation}
 \text{veCPT}(t) = \text{CPT}_{\text{locked}} \times \frac{t_{\text{remaining}}}{t_{\text{max}}} \times 2.5
 \end{equation}
-This decay mechanism incentivizes continuous participation through lock extensions or token relocking.
+这种衰减机制通过锁仓延期或代币重新锁仓激励持续参与。
 
-\subsubsection{Reward Distribution}
+\subsubsection{奖励分配}
 
-Platform revenue collected in USDC is distributed with 30\% allocated to the staking rewards pool on a weekly or monthly basis. Individual rewards are calculated proportionally to veCPT holdings:
+平台以USDC收取的收入中，30%按周或按月分配给质押奖励池。个人奖励按veCPT持有量比例计算：
 \begin{equation}
 \text{Reward}_{\text{user}} = \text{Revenue}_{\text{pool}} \times \frac{V_{\text{user}}}{V_{\text{total}}}
 \end{equation}
-where $V_{\text{user}}$ represents the user's veCPT balance and $V_{\text{total}}$ denotes total veCPT supply. The effective APY varies dynamically based on staking participation and platform performance:
+其中$V_{\text{user}}$表示用户的veCPT余额，$V_{\text{total}}$表示veCPT总供应量。有效年收益率（APY）根据质押参与度和平台绩效动态变化：
 \begin{equation}
-\text{APY} = \frac{\text{Annual Revenue Pool}}{\text{Total CPT Staked Value}} \times \frac{\text{veCPT Multiplier}}{\text{Average Multiplier}}
+\text{APY} = \frac{\text{年度奖励池}}{\text{质押CPT总价值}} \times \frac{\text{veCPT乘数}}{\text{平均乘数}}
 \end{equation}
 
-\subsubsection{Security and Optimization}
+\subsubsection{安全与优化}
 
-Smart contracts undergo third-party audits following OpenZeppelin standards, with multi-signature governance controlling parameter modifications. All reward distributions are tracked on-chain for transparency. Security features include reentrancy guards on external calls, role-based access control, emergency pause functionality, and upgradeable proxy patterns. Critical parameter changes enforce a 48-hour timelock.
+智能合约遵循OpenZeppelin标准进行第三方审计，参数修改由多签治理控制。所有奖励分配均在链上跟踪，确保透明度。安全功能包括外部调用的重入防护、基于角色的访问控制、紧急暂停功能以及可升级代理模式。关键参数变更需执行48小时时间锁。
 
-Gas optimization employs Merkle tree-based batch claiming, lazy evaluation of veCPT balances, packed storage variables, and event-driven off-chain indexing. These techniques reduce transaction costs while maintaining security guarantees.
+燃气优化采用基于默克尔树的批量申领、veCPT余额的延迟评估、打包存储变量以及事件驱动的链下索引。这些技术在保持安全保障的同时降低了交易成本。
 
-\subsection{Oracle Integration}
+\subsection{预言机整合}
 
-The platform integrates Chainlink decentralized oracles for price discovery and data aggregation. CPT/USD price feeds aggregate data from Uniswap V3 time-weighted average prices and centralized exchange quotations. USDC/USD verification employs Chainlink's verified feed with a 0.5\% deviation threshold. Oracles update at 5-minute intervals or upon 1\% price movements, with manual fallback mechanisms for redundancy.
+平台整合Chainlink去中心化预言机用于价格发现和数据聚合。CPT/USD价格馈送聚合来自Uniswap V3时间加权平均价格和中心化交易所报价的数据。USDC/USD验证采用Chainlink的验证馈送，偏差阈值为0.5%。预言机每5分钟或价格波动1%时更新，并设有手动回退机制以确保冗余。
 
-For computing resource pricing, off-chain aggregators monitor public APIs of major cloud providers (AWS, Azure, GCP, Alibaba Cloud), calculating real-time market rates for compute, storage, and bandwidth. Aggregated pricing publishes to on-chain oracle contracts daily or when deviations exceed 5\%.
+对于计算资源定价，链下聚合器监控主流云提供商（AWS、Azure、GCP、阿里云）的公共API，计算计算、存储和带宽的实时市场价格。聚合定价每天或偏差超过5%时发布到链上预言机合约。
 
-Oracle security relies on consensus from at least seven independent Chainlink nodes. The system rejects price updates deviating beyond 10\% from the median or data older than one hour. Circuit breakers automatically halt trading upon detecting manipulation attempts.
+预言机安全依赖至少7个独立Chainlink节点的共识。系统拒绝与中位数偏差超过10%或数据年龄超过1小时的价格更新。电路断路器在检测到操纵尝试时自动暂停交易。
 
-\subsection{Governance Architecture}
+\subsection{治理架构}
 
-Critical platform operations require multi-signature approval through Gnosis Safe implementation. Treasury movements exceeding 100K USDC require 5-of-9 signatures, while smart contract upgrades mandate 7-of-9 approval with a 48-hour timelock. Parameter adjustments operate under 4-of-9 consensus, and emergency security responses utilize a 3-of-5 rapid response configuration.
+关键平台操作需要通过Gnosis Safe实现的多签审批。超过100K USDC的国库转移需要5/9签名，而智能合约升级需要7/9审批并配合48小时时间锁。参数调整采用4/9共识，紧急安全响应采用3/5快速响应配置。
 
-The governance process follows a structured timeline: holders of 100K+ veCPT may submit proposals, followed by a 7-day community discussion period and 5-day on-chain voting phase where 1 veCPT equals 1 vote. Approved proposals execute after a 48-hour delay. The multi-signature council retains veto authority over malicious proposals, subject to quarterly review.
+治理流程遵循结构化时间线：持有100K+ veCPT的用户可提交提案，随后是7天社区讨论期和5天链上投票期，其中1 veCPT等于1票。获批提案在48小时延迟后执行。多签委员会保留对恶意提案的否决权，需每季度审查。
 
-\subsection{Cross-Chain Infrastructure}
+\subsection{跨链基础设施}
 
-The platform implements LayerZero omnichain protocol for multi-chain deployment. Arbitrum serves as the primary chain for its low transaction costs and high throughput. Ethereum mainnet support targets institutional users requiring Layer-1 security, while Polygon integration offers reduced transaction costs for cost-sensitive users. Future expansion includes Optimism (Q3 2024) and Base (Q4 2024) for broader ecosystem integration.
+平台采用LayerZero跨链协议进行多链部署。Arbitrum作为主链，因其低交易成本和高吞吐量。以太坊主网支持面向需要Layer-1安全性的机构用户，而Polygon集成则为对成本敏感的用户提供更低的交易成本。未来扩展包括Optimism（2024年第三季度）和Base（2024年第四季度），以实现更广泛的生态系统整合。
 
-Bridge security incorporates multiple safeguards: liquidity caps restrict bridged supply to 10\% per chain, rate limiting constrains throughput to 1M CPT per hour, emergency pause mechanisms respond to anomalies, and a 5\% insurance fund collateralizes bridged value against potential exploits.
+桥接安全包含多种保障措施：流动性上限将每条链的桥接供应量限制在10%，速率限制将吞吐量限制在每小时1M CPT，紧急暂停机制应对异常情况，5%的保险基金为桥接价值提供抵押以应对潜在漏洞。
 
-\subsection{Wallet Infrastructure}
+\subsection{钱包基础设施}
 
-As a standard ERC20 token, CPT supports all compliant wallets including browser extensions (MetaMask, Rabby, Rainbow), mobile applications (Trust Wallet, Coinbase Wallet, imToken), hardware devices (Ledger, Trezor), and smart contract wallets (Argent, Gnosis Safe). Institutional custody integration with Fireblocks and Copper.co is planned for future deployment.
+作为标准ERC20代币，CPT支持所有合规钱包，包括浏览器扩展（MetaMask、Rabby、Rainbow）、移动应用（Trust Wallet、Coinbase Wallet、imToken）、硬件设备（Ledger、Trezor）和智能合约钱包（Argent、Gnosis Safe）。计划未来部署与Fireblocks和Copper.co的机构托管集成。
 
-The web portal implements WalletConnect and Web3Modal protocols for standardized wallet connectivity. Upon connection authorization, the platform queries user balances, staking positions, and veCPT holdings to enable full feature access. Transaction signing follows EIP-712 standards for typed structured data, presenting human-readable messages that improve security against phishing vectors.
+门户实现WalletConnect和Web3Modal协议，用于标准化钱包连接。在连接授权后，平台查询用户余额、质押头寸和veCPT持有量，以启用完整功能访问。交易签名遵循EIP-712标准的类型化结构化数据，呈现人类可读的消息，提高针对钓鱼向量的安全性。
 
+\section{市场计算基础设施}
 
-\section{Marketplace Computing Infrastructure}
+\subsection{系统架构}
 
-\subsection{System Architecture}
+平台采用三层架构。Web3接口层通过React.js和ethers.js框架管理钱包认证（WalletConnect）、USDC支付处理和CPT奖励分配。编排层协调CHESS集群管理系统、作业调度、资源分配、性能监控和服务提供商（SP）认证流程。计算资源层聚合CSP集群、公共云API（AWS、Azure、GCP、阿里云）、私有HPC中心和未来的边缘计算节点。
 
-The platform implements a three-tier architecture. The Web3 interface layer manages wallet authentication (WalletConnect), USDC payment processing, and CPT reward distribution through React.js and ethers.js frameworks. The orchestration layer coordinates the CHESS cluster management system, job scheduling, resource allocation, performance monitoring, and SP certification processes. The computing resource layer aggregates CSP clusters, public cloud APIs (AWS, Azure, GCP, Alibaba), private HPC centers, and future edge computing nodes.
+交易流程包括：提交作业并存入USDC、智能合约托管直至完成、CHESS介导的资源匹配、在分配的SP基础设施上执行、实时SLA合规性监控、结果交付与自动支付结算、CPT奖励按比例分配（用户1-3%，SP 2-5%）。
 
-Transaction flow proceeds through job submission with USDC deposit, smart contract escrow until completion, CHESS-mediated resource matching, execution on allocated SP infrastructure, real-time SLA compliance monitoring, result delivery with automated payment settlement, and proportional CPT reward distribution (1-3\% users, 2-5\% SPs).
+\subsection{HPC基础设施组件}
 
-\subsection{HPC Infrastructure Components}
+高性能计算（HPC）基础设施由专门的节点类型组成：计算节点使用多核处理器和大量内存执行数值模拟和数据分析；可视化节点使用GPU加速渲染大型数据集；I/O节点管理存储和计算结构之间的数据传输；存储节点提供高并发文件系统；管理节点协调资源分配和作业调度。
 
-High-Performance Computing infrastructure comprises specialized node types: compute nodes execute numerical simulations and data analysis with multi-core processors and substantial memory; visualization nodes render large datasets using GPU acceleration; I/O nodes manage data transfer between storage and compute fabric; storage nodes provide high-concurrency file systems; management nodes coordinate resource allocation and job scheduling.
+网络结构采用高速互连技术（InfiniBand、以太网）进行节点间通信。并行文件系统支持大型数据集和中间结果的并发多节点读写操作。
 
-Network fabric employs high-speed interconnect technologies (InfiniBand, Ethernet) for inter-node communication. Parallel file systems enable concurrent multi-node read/write operations for large datasets and intermediate results.
+\subsubsection{软件栈}
 
-\subsubsection{Software Stack}
+监控和管理工具为管理员提供系统组件的实时健康和性能数据，包括CPU利用率、内存消耗和网络流量模式。集群管理软件协调整个系统的操作，为地理分布的计算节点提供配置、监控和维护功能。
 
-Monitoring and management tools provide administrators real-time health and performance data across system components including CPU utilization, memory consumption, and network traffic patterns. Cluster management software coordinates overall system operations with provisioning, monitoring, and maintenance capabilities for compute nodes across geographically distributed installations.
+资源分配采用专门的调度器管理CPU时间、内存和其他计算资源，以最大化系统利用率效率。用户界面包括命令行工具和门户，用于作业提交和管理。HPC应用中心聚合特定领域的应用和模板，使用户能够直接下载和部署计算工具。集成计费系统在资源类型和计费周期内实现透明的定价策略，促进合理的资源利用和准确的成本核算。
 
-Resource allocation employs specialized schedulers managing CPU time, memory, and other computational resources to maximize system utilization efficiency. User interfaces span command-line tools and web portals for job submission and management. The HPC Application Center aggregates domain-specific applications and templates, enabling users to download and deploy computational tools directly. Integrated billing systems implement transparent pricing strategies across resource types and billing cycles, facilitating rational resource utilization and accurate cost accounting.
+\subsection{支付与结算基础设施}
 
-\subsection{Payment and Settlement Infrastructure}
+\subsubsection{托管机制}
 
-\subsubsection{Escrow Mechanism}
+作业提交启动托管流程，用户批准USDC支付到平台的智能合约。托管合约计算预估成本，包括资源类型（CPU/GPU/存储）、时长预测、预言机得出的市场定价以及20%的潜在超支缓冲。USDC在批准后转移到托管账户，锁定在唯一的作业标识符下。
 
-Job submission initiates an escrow process wherein users approve USDC spending to the platform's smart contract. The escrow contract calculates estimated costs incorporating resource type (CPU/GPU/Storage), duration projections, oracle-derived market pricing, and a 20\% buffer for potential overruns. USDC transfers to escrow upon approval, locked against the unique job identifier.
+作业完成后，实际资源消耗决定最终结算。服务提供商直接以USDC获得95-98%的费用，平台保留2-5%的交易费。多余的托管资金自动返还给用户，CPT奖励按比例分配给用户（1-3%）和SP（2-5%）。
 
-Upon job completion, actual resource consumption determines final settlement. Service Providers receive 95-98\% of the fee directly in USDC, while the platform retains a 2-5\% transaction fee. Excess escrowed funds return to users automatically, and CPT rewards distribute proportionally to both users (1-3\%) and SPs (2-5\%).
+\subsubsection{争议解决协议}
 
-\subsubsection{Dispute Resolution Protocol}
+SLA违规触发分级解决机制。5分钟内失败的作业有资格自动获得全额退款。部分完成的作业根据实际交付量产生按比例退款。用户可在72小时内提交争议并提供支持证据。价值超过10K USDC的案例升级到平台治理仲裁，保险基金覆盖经验证的最高100K USDC的索赔。
 
-SLA violations trigger graduated resolution mechanisms. Jobs failing within five minutes qualify for automatic full refunds. Partial completion generates pro-rated refunds based on actual delivery. Users may file disputes within a 72-hour window with supporting evidence. Cases exceeding 10K USDC value escalate to platform governance arbitration, while the insurance fund covers validated claims up to 100K USDC.
+\subsubsection{服务提供商认证}
 
-\subsubsection{Service Provider Certification}
+服务提供商认证需要多阶段验证流程。初始注册需要公司验证文件、基础设施规格、支付钱包地址和安全合规证书（SOC 2、ISO 27001）。技术验证采用行业标准基准，包括高性能Linpack（HPL）、高性能共轭梯度（HPCG）、STREAM内存带宽、AI工作负载的MLPerf以及网络延迟评估。安全审计验证AES-256加密、网络隔离和DDoS保护能力。
 
-Service Provider certification requires a multi-stage verification process. Initial registration demands company verification documents, infrastructure specifications, payment wallet addresses, and security compliance certificates (SOC 2, ISO 27001). Technical verification employs industry-standard benchmarks including High-Performance Linpack (HPL), High-Performance Conjugate Gradient (HPCG), STREAM memory bandwidth, MLPerf for AI workloads, and network latency assessments. Security audits verify AES-256 encryption, network isolation, and DDoS protection capabilities.
+获批候选人进入30天试用期，接受强化监控，作业并发限制为10个。成功完成后获得认证服务提供商（CSP）身份，能够访问机构客户和参与团购。CSP在高级目录中显示，并带有验证徽章。
 
-Approved candidates enter a 30-day probationary period with enhanced monitoring and a 10-job concurrency limit. Successful completion grants Certified Service Provider (CSP) status, enabling access to institutional clients and group-buying participation. CSPs appear in the premium directory with verified badges.
+持续合规要求每月99.5%的正常运行时间、5分钟内的作业启动时间以及性能在宣传基准的10%以内。每季度重新认证验证持续能力。关键漏洞的安全补丁必须在48小时内部署。违规触发分级处罚：首次违规警告并给予7天整改期，第二次违规暂停30天，第三次违规吊销认证。
 
-Ongoing compliance mandates 99.5\% monthly uptime, sub-5-minute job initiation, and performance within 10\% of advertised benchmarks. Quarterly re-certification validates continued capability. Security patches for critical vulnerabilities must deploy within 48 hours. Violations trigger graduated penalties: first offense warnings with 7-day remediation, second offense 30-day suspension, third offense certification revocation.
+\subsection{技术栈}
 
-\subsection{Technical Stack}
+平台采用React.js 18+与TypeScript进行前端开发，ethers.js v6和WalletConnect v2进行Web3集成，Material-UI确保界面一致性。后端架构采用Node.js/Express.js或Python FastAPI提供API服务，PostgreSQL用于关系型持久化，Redis用于缓存，RabbitMQ/Kafka用于异步作业队列，The Graph用于区块链事件索引，Prometheus/Grafana用于可观测性。DevOps基础设施通过Docker容器化所有服务，通过Kubernetes编排生产部署，通过GitHub Actions实现CI/CD，通过Cloudflare CDN分发内容，通过Nginx实现流量负载均衡。
 
-The platform employs React.js 18+ with TypeScript for frontend development, ethers.js v6 and WalletConnect v2 for Web3 integration, and Material-UI for interface consistency. Backend architecture utilizes Node.js/Express.js or Python FastAPI for API services, PostgreSQL for relational persistence, Redis for caching, RabbitMQ/Kafka for asynchronous job queuing, The Graph for blockchain event indexing, and Prometheus/Grafana for observability. DevOps infrastructure containerizes all services via Docker, orchestrates production deployment through Kubernetes, implements CI/CD via GitHub Actions, distributes content through Cloudflare CDN, and load balances traffic via Nginx.
+入门级CSP需要100+ CPU核心（Intel Xeon/AMD EPYC）、500 GB内存、10 TB NVMe SSD或50 TB HDD、10 Gbps网络上行链路，以及可选的4+ NVIDIA A100/H100 GPU。企业级CSP可扩展至10,000+ CPU核心、50 TB+聚合内存、1 PB+并行文件系统存储（Lustre/GPFS）、100 Gbps InfiniBand骨干网和100+高端GPU。
 
-Entry-level CSPs require 100+ CPU cores (Intel Xeon/AMD EPYC), 500 GB RAM, 10 TB NVMe SSD or 50 TB HDD, 10 Gbps network uplink, and optionally 4+ NVIDIA A100/H100 GPUs. Enterprise CSPs scale to 10,000+ CPU cores, 50 TB+ aggregate RAM, 1 PB+ parallel file system storage (Lustre/GPFS), 100 Gbps InfiniBand backbone, and 100+ high-end GPUs.
+\subsection{平台用户功能}
 
-\subsection{Platform User Functions}
+CPT门户服务三个主要群体：探索项目信息的访客、采购市场资源（公共云、HPC提供商、硬件、软件、存储）的用户，以及执行USDC存款和铸造操作的流动性提供者。
 
-The CPT portal serves three primary constituencies: visitors exploring project information, users procuring marketplace resources (public cloud, HPC providers, hardware, software, storage), and Liquidity Providers executing USDC deposits and minting operations.
+公共云消费者可在包括FQ、亚马逊和华为云在内的供应商之间选择，定价以USDC计价，并附带促销优惠。供应商选择将用户重定向到原生门户（如AWS），标准操作通过CPT平台托管进行支付路由。平台随后以法定货币与供应商结算。
 
-Public cloud consumers select between vendors including FQ, Amazon, and Huawei Cloud with pricing denominated in USDC alongside promotional offerings. Vendor selection redirects users to native portals (e.g., AWS) where standard operations proceed with payment routing through CPT platform escrow. The platform subsequently settles with vendors in legal tender.
+HPC资源消费者比较供应商（CT集群、区域提供商、华为、AWS）的价格、硬件规格、性能指标和区域带宽。供应商选择和作业提交通过CHESS门户进行，需存入足够的USDC，资金托管直至完成，随后进行法定结算。存储采购遵循相同的工作流程。
 
-HPC resource consumers compare vendors (CT clusters, regional providers, Huawei, AWS) across price points, hardware specifications, performance metrics, and regional bandwidth. Vendor selection and job submission occur through CHESS portal following adequate USDC deposit, with funds escrowed until completion whereupon fiat settlement proceeds. Storage procurement follows identical workflows.
+软件选项包括用户提供的应用或平台列出的来自Ansys、HPC软件供应商和CHESS应用中心的解决方案。供应商入驻可容纳硬件、存储、软件和辅助计算产品。当两个组件都来自平台列表时，系统验证硬件-软件兼容性，确保执行兼容性。架构可根据需求变化适应未来的功能扩展。
 
-Software options encompass user-provided applications or platform-listed solutions from Ansys, HPC software vendors, and the CHESS application center. Vendor onboarding accommodates hardware, storage, software, and ancillary computing products. The system validates hardware-software compatibility when both components originate from platform listings, ensuring execution compatibility. The architecture accommodates future functional extensions as requirements evolve.
+\subsection{公共云集成}
 
+市场聚合来自主流公共云供应商（AWS、Azure、谷歌云、阿里云）的计算资源。定价以USDC计价，显示实时促销和可用性状态。
 
-\subsection{Public Cloud Integration}
+\subsubsection{供应商集成模型}
 
-The marketplace aggregates computing resources from major public cloud vendors including AWS, Azure, Google Cloud, and Alibaba Cloud. Pricing displays in USDC denomination with active promotions and availability status.
+平台采用三种集成方法。直接API集成利用转售商凭证通过供应商API（AWS EC2、Azure Resource Manager、GCP Compute Engine）进行实时配置，支持自动实例生命周期管理。优惠券代码系统通过预生成的代码防止超售，解决容量限制，有基于价值的（100美元通用 credits）或基于资源的（1000 GPU小时、10 TB存储）格式。托管服务提供商（MSP）模式将CyberPlaza定位为MSP，拥有批量定价协议，管理供应商账户并提供合并计费。
 
-\subsubsection{Vendor Integration Models}
+实时价格比较显示计算、存储和网络成本以及总拥有成本计算。团购折扣突出相对于直接采购的潜在 savings。
 
-The platform employs three integration methodologies. Direct API integration utilizes reseller credentials for real-time provisioning through vendor APIs (AWS EC2, Azure Resource Manager, GCP Compute Engine), enabling automatic instance lifecycle management. The coupon code system addresses capacity constraints through pre-generated codes preventing overselling, available in value-based (\$100 universal credits) or resource-specific (1000 GPU hours, 10 TB storage) formats. The Managed Service Provider model positions CyberPlaza as an MSP with bulk pricing agreements, managing vendor accounts and providing consolidated billing.
+\subsubsection{作业提交工作流程}
 
-Real-time pricing comparison displays compute, storage, and network costs with total ownership calculations. Group-buying discounts highlight potential savings relative to direct procurement.
+HPC作业提交流程包括：通过过滤的CSP列表（CPU类型、GPU可用性、地区、定价）选择资源；通过应用中心模板或自定义代码配置作业，指定需求（节点、核心、内存、运行时间、GPU）和I/O位置；成本估算，包含USDC细分和预计CPT奖励；支付授权，将USDC转移到托管账户并附带应急缓冲；通过CHESS调度器分配执行，实时状态监控；完成结算，交付结果，自动支付分配，多余退款和CPT奖励发放。
 
-\subsubsection{Job Submission Workflow}
+高级功能包括支持100+作业的批量提交和参数扫描、定义顺序执行的工作流程依赖、容错的 checkpoint/restart、可抢占容量的竞价实例（可获得50-70%折扣）以及动态资源调整的自动缩放。
 
-The HPC job submission process encompasses resource selection through filtered CSP listings (CPU type, GPU availability, region, pricing), job configuration via Application Center templates or custom code with specified requirements (nodes, cores, memory, runtime, GPUs) and I/O locations, cost estimation with USDC breakdown and projected CPT rewards, payment authorization transferring USDC to escrow with contingency buffer, execution through CHESS scheduler allocation with real-time status monitoring, and completion settlement delivering results with automated payment distribution, excess refunds, and CPT reward issuance.
+服务提供商通过集中式仪表板管理操作，包括资源分配、作业监督、财务跟踪（USDC收入、CPT积累）和性能分析（客户满意度、利用率指标）。
 
-Advanced capabilities include batch submission supporting 100+ jobs with parameter sweeps, workflow dependencies defining sequential execution, checkpoint/restart for fault tolerance, spot instance bidding yielding 50-70\% discounts on preemptible capacity, and auto-scaling for dynamic resource adjustment.
+\subsection{多集群管理系统}
 
-Service Providers manage operations through a centralized dashboard encompassing resource allocation, job oversight, financial tracking (USDC revenue, CPT accumulation), and performance analytics (customer satisfaction, utilization metrics).
+CHESS（Cluster High-performance Execution and Scheduling System，集群高性能执行与调度系统）平台提供地理分布的计算资源的统一管理。系统通过带有基于角色的访问控制的集中式门户集成监控、调度和资源分配。
 
-\subsection{Multi-Cluster Management System}
+\subsubsection{核心功能}
 
-The CHESS (Cluster High-performance Execution and Scheduling System) platform provides unified management across geographically distributed computing resources. The system integrates monitoring, scheduling, and resource allocation through a centralized web portal with role-based access control.
+平台通过Web界面和SSH协议支持全面的数据管理，启用文件操作，包括上传、下载、压缩和提取。节点管理通过批量命令控制电源状态、远程访问（VNC、shell），并支持异构硬件配置（CPU、GPU、FPGA）。资源配额执行存储和计算分配的管理政策，阈值违规时自动生成警报。
 
-\subsubsection{Core Capabilities}
+高可用性架构通过冗余管理节点和数据库复制消除单点故障。系统协调多个地理分布的集群，在子集群之间统一用户角色传播。
 
-The platform supports comprehensive data management through web interfaces and SSH protocols, enabling file operations including upload, download, compression, and extraction. Node management operates through batch commands controlling power states, remote access (VNC, shell), and supporting heterogeneous hardware configurations (CPU, GPU, FPGA). Resource quotas enforce administrative policies on storage and compute allocation with automated alert generation upon threshold violations.
+\subsection{性能监控基础设施}
 
-High availability architecture eliminates single points of failure through redundant management nodes and database replication. The system coordinates multiple geographically distributed clusters with unified user role propagation across sub-clusters.
+高性能和云计算系统聚合大量硬件资源，通过高速网络互连，形成低延迟、高容量的配置。有效的集群管理需要监控和管理工具提供资源配置、实时性能跟踪、故障检测与警报以及使用状态可视化。
 
+\subsubsection{CHESS监控功能}
 
-\subsection{Performance Monitoring Infrastructure}
+CHESS监控系统通过聚合仪表板提供全面的集群监控，显示Ethernet和InfiniBand结构的CPU和内存使用情况、负载状态、存储状态和网络吞吐量。自定义时间间隔选择支持历史趋势分析和性能跟踪。仪表板显示提供可定制的大屏幕演示，用于存储使用、作业调度和网络统计的动态指标刷新。
 
-High-performance and cloud computing systems aggregate substantial hardware resources interconnected via high-speed networks forming low-latency, high-capacity configurations. Effective cluster management necessitates monitoring and management tools providing resource configuration, real-time performance tracking, fault detection with alerting, and usage state visualization.
+多集群监控扩展到地理分布的安装，具有自适应屏幕布局和分辨率优化。机架可视化呈现物理拓扑，集成电源管理和VNC远程访问控制。单节点监控捕获粒度CPU、内存、存储、负载和网络指标，同时提供故障诊断和恢复建议。GPU监控跟踪设备特定的使用率、内存利用率、温度和带宽。作业监控分析实时执行状态和队列组成，包括详细的CPU利用率、内存消耗和节点负载统计。集群警报实现可配置的阈值，带有电子邮件和系统通知路由。
 
-\subsubsection{CHESS Monitoring Capabilities}
+性能指标以用户定义的间隔收集，捕获CPU、内存、磁盘和网络数据。物理拓扑可视化包含机架和节点排列，带有基于阈值的故障警报。
 
-The CHESS monitoring system provides comprehensive cluster oversight through aggregated dashboards displaying CPU and memory usage, load status, storage state, and network throughput across Ethernet and InfiniBand fabrics. Custom time interval selection enables historical trend analysis and performance tracking. Dashboard displays offer customizable large-screen presentations with dynamic metric refresh for storage usage, job scheduling, and network statistics.
+\subsubsection*{调度器和资源管理}
 
-Multi-cluster monitoring extends across geographically distributed installations with adaptive screen layouts and resolution optimization. Rack visualization renders physical topology with integrated power management and VNC remote access controls. Single-node monitoring captures granular CPU, memory, storage, load, and network metrics while providing fault diagnostics and recovery recommendations. GPU monitoring tracks device-specific usage rates, memory utilization, temperature, and bandwidth. Job monitoring analyzes real-time execution status and queue composition with detailed CPU utilization, memory consumption, and node load statistics. Cluster alerts implement configurable thresholds with email and system notification routing.
+高效的调度和资源管理在多集群系统中至关重要。CHESS提供灵活的调度策略，包括FIFO、抢占和回填策略。系统支持带有服务质量（QoS）配置的资源预留、涵盖串行、并行和GPU工作负载的高级作业提交，以及用于负载平衡优化的队列管理。
 
-Performance metrics collect at user-defined intervals capturing CPU, memory, disk, and network data. Physical topology visualization encompasses rack and node arrangements with threshold-based fault alerting.
+\subsubsection{作业提交和管理}
 
+用户通过命令行界面、基于Web的GUI或常见工作流程的应用模板提交作业。管理员配置资源配额、优先级和提交政策，以管理系统访问和利用。
 
-\subsubsection*{Schedulers and Resource Management}
+\subsection{应用中心}
 
-Efficient scheduling and resource management are critical in multi-cluster systems. CHESS offers flexible scheduling policies including FIFO, preemption, and backfilling strategies. The system supports resource reservations with Quality of Service (QoS) configurations, advanced job submissions spanning serial, parallel, and GPU workloads, and queue management for load balancing optimization.
+应用中心通过可浏览的库提供对预安装HPC应用（Ansys、MATLAB、TensorFlow）的访问。用户通过带有交互式参数配置的图形模板提交作业。输出管理包括日志查看、错误分析、性能指标跟踪和集成可视化工具（用于AI应用的TensorBoard）。
 
-\subsubsection{Job Submission and Management}
+\subsection{硬件性能评估}
 
-Users submit jobs via command-line interfaces, web-based GUIs, or application templates for common workflows. Administrators configure resource quotas, priority levels, and submission policies to govern system access and utilization.
+硬件性能评估模块执行基准测试，测量CPU和GPU性能以及网络吞吐量和延迟。资源效率分析根据工作负载特征优化分配策略。故障恢复指标评估硬件可靠性和故障场景下的恢复性能。
 
+\subsection{安全架构与合规性}
 
+\subsubsection{多层安全模型}
 
-% \subsection*{6.2.5 Pricing Module}
+平台在三层实现纵深防御安全。智能合约安全采用Certora或等效工具进行形式化验证，CertiK、Trail of Bits或OpenZeppelin进行年度第三方审计，提供最高50万美元奖励的漏洞赏金计划，带有48小时时间锁的可升级透明代理模式，以及用于紧急漏洞响应的电路断路器。
 
-% This module will focus on calculating costs for resource usage and presenting pricing details to users. It will integrate with job scheduling and monitoring systems for real-time cost tracking.
+平台安全包括通过OAuth 2.0和JWT认证的API保护，速率限制为100请求/分钟，SP访问的IP白名单，以及90天的API密钥轮换。数据加密实现TLS 1.3用于传输保护，AES-256用于静态数据，敏感工作负载的端到端加密，以及用于密钥管理的硬件安全模块（HSM）。基础设施安全部署Cloudflare DDoS保护、带有OWASP规则集的Web应用防火墙、季度渗透测试，以及用于事件监控的SIEM系统。
 
+数据隐私和合规措施通过账户删除权利、数据可移植性、隐私设计原则和欧盟数据驻留选项解决GDPR要求。KYC/AML程序对每月超过10K USDC的交易实施基本验证，对CSP认证实施增强验证，对可疑活动进行交易监控，并遵守FATF旅行规则。数据隔离采用容器化或基于VM的作业执行、网络分段、完成后自动数据擦除，以及跨用户泄漏预防。
 
-% \subsubsection*{6.2.5 User Interfaces and Operational Portals}
+\subsubsection{事件响应}
 
-\subsubsection{User Management}
+持续安全运营中心监控异常活动，包括异常提款、智能合约漏洞和API滥用。事件分类遵循四级严重程度模型（ critical、high、medium、low），评估目标为15分钟。Critical事件触发立即合约暂停，并在1小时内通知多签。Critical事件的公开披露在24小时内进行，事后报告在7天内发布。恢复程序通过治理渠道部署补丁，并从保险基金补偿受影响用户。
 
-The platform supports self-registration and administrator-configured accounts with LDAP authentication integration for centralized management. Role-based access control implements default roles (admin, department admin, user) with flexible privilege assignment governing system access and capabilities.
+\subsubsection{监管合规性}
 
-\subsubsection{Notifications and Messaging}
+平台追求SOC 2 Type II认证，以确保数据安全和可用性（第1年目标），并追求ISO 27001认证，以确保信息安全管理（第2年目标）。Cloud Security Alliance STAR认证验证CSP安全态势。PCI DSS合规性仍在考虑中，用于未来的支付方式扩展。
 
-Users receive automated alerts for billing and usage messages alongside administrative announcements.
+\subsection{可扩展性与性能优化}
 
+\subsubsection{横向扩展架构}
 
-\subsection{Application Center}
+平台通过分布式数据库架构横向扩展，在各地区采用PostgreSQL只读副本，按ID哈希对用户数据进行分片，Redis集群用于热数据（会话、定价），Cloudflare CDN用于静态资产交付。
 
-The Application Center provides access to pre-installed HPC applications (Ansys, MATLAB, TensorFlow) through a browsable library. Users submit jobs via graphical templates with interactive parameter configuration. Output management encompasses log viewing, error analysis, performance metric tracking, and integrated visualization tools (TensorBoard for AI applications).
+微服务架构将功能分解为独立可扩展的服务：用户服务（认证、个人资料）、作业服务（提交、调度、监控）、支付服务（USDC托管、结算、CPT奖励）、SP服务（入驻、认证、评级）、定价服务（预言机聚合）和通知服务（电子邮件、推送、链上事件）。每个服务根据需求自主扩展。
 
-\subsection{Hardware Performance Evaluation}
+负载均衡在US、EU和亚洲地区实现地理分布，使用Kubernetes水平Pod自动缩放器进行动态容量调整，Hystrix电路断路器防止级联故障，RabbitMQ队列用于异步作业处理。
 
-The hardware performance evaluation module executes benchmarking tests measuring CPU and GPU performance alongside network throughput and latency. Resource efficiency analysis optimizes allocation strategies based on workload characteristics. Fault recovery metrics assess hardware reliability and recovery performance under failure scenarios.
-
-\subsection{Security Architecture and Compliance}
-
-\subsubsection{Multi-Layer Security Model}
-
-The platform implements defense-in-depth security across three layers. Smart contract security employs formal verification using Certora or equivalent tools, annual third-party audits by CertiK, Trail of Bits, or OpenZeppelin, bug bounty programs offering up to \$500K for critical vulnerabilities, upgradeable transparent proxy patterns with 48-hour timelocks, and circuit breakers for emergency exploit response.
-
-Platform security encompasses API protection through OAuth 2.0 and JWT authentication with 100 requests/minute rate limiting, IP whitelisting for SP access, and 90-day API key rotation. Data encryption implements TLS 1.3 for transit protection, AES-256 for data at rest, end-to-end encryption for sensitive workloads, and Hardware Security Modules for key management. Infrastructure security deploys Cloudflare DDoS protection, Web Application Firewalls with OWASP rulesets, quarterly penetration testing, and SIEM systems for event monitoring.
-
-Data privacy and compliance measures address GDPR requirements through account deletion rights, data portability, privacy-by-design principles, and EU data residency options. KYC/AML procedures implement basic verification for transactions exceeding 10K USDC monthly, enhanced verification for CSP certification, transaction monitoring for suspicious activity, and FATF Travel Rule compliance. Data isolation employs containerized or VM-based job execution, network segmentation, automatic post-completion data wiping, and cross-user leakage prevention.
-
-\subsubsection{Incident Response}
-
-A continuous security operations center monitors for anomalous activity including unusual withdrawals, smart contract exploits, and API abuse. Incident classification follows a four-tier severity model (Critical, High, Medium, Low) with 15-minute assessment targets. Critical incidents trigger immediate contract pausing and multi-signature notification within one hour. Public disclosure occurs within 24 hours for critical events, while post-mortem reports publish within 7 days. Recovery procedures deploy patches through governance channels and compensate affected users from the insurance fund.
-
-\subsubsection{Regulatory Compliance}
-
-The platform pursues SOC 2 Type II certification for data security and availability (Year 1 target) and ISO 27001 for information security management (Year 2 target). Cloud Security Alliance STAR certification validates CSP security posture. PCI DSS compliance remains under consideration for future payment method expansion.
-
-\subsection{Scalability and Performance Optimization}
-
-\subsubsection{Horizontal Scaling Architecture}
-
-The platform scales horizontally through distributed database architecture employing PostgreSQL read replicas across regions, user data sharding by ID hash, Redis clustering for hot data (sessions, pricing), and Cloudflare CDN for static asset delivery.
-
-Microservices architecture decomposes functionality into independently scalable services: User Service (authentication, profiles), Job Service (submission, scheduling, monitoring), Payment Service (USDC escrow, settlement, CPT rewards), SP Service (onboarding, certification, rating), Pricing Service (oracle aggregation), and Notification Service (email, push, on-chain events). Each service scales autonomously based on demand.
-
-Load balancing implements geographic distribution across US, EU, and Asia regions with Kubernetes Horizontal Pod Autoscaler for dynamic capacity adjustment, Hystrix circuit breakers preventing cascading failures, and RabbitMQ queuing for asynchronous job processing.
-
-\subsubsection{Performance Targets}
+\subsubsection{性能目标}
 
 \begin{center}
 \begin{tabular}{|l|c|c|}
 \hline
-\textbf{Metric} & \textbf{Target (Year 1)} & \textbf{Target (Year 3)} \\
+\textbf{指标} & \textbf{目标（第1年）} & \textbf{目标（第3年）} \\
 \hline
-API Response Time & <200ms (p95) & <100ms (p95) \\
-Job Submission Time & <5 seconds & <2 seconds \\
-Payment Settlement & <30 seconds & <10 seconds \\
-Page Load Time & <2 seconds & <1 second \\
-Platform Uptime & 99.5\% & 99.9\% \\
-Concurrent Users & 10,000 & 100,000 \\
-Daily Transactions & 50,000 & 1,000,000 \\
+API响应时间 & <200ms (p95) & <100ms (p95) \\
+作业提交时间 & <5秒 & <2秒 \\
+支付结算时间 & <30秒 & <10秒 \\
+页面加载时间 & <2秒 & <1秒 \\
+平台正常运行时间 & 99.5\% & 99.9\% \\
+并发用户 & 10,000 & 100,000 \\
+每日交易 & 50,000 & 1,000,000 \\
 \hline
 \end{tabular}
 \end{center}
 
-\subsubsection{Blockchain Scalability}
+\subsubsection{区块链可扩展性}
 
-Arbitrum Layer 2 deployment provides sub-\$0.10 transaction fees and 40,000 TPS throughput for primary operations. Batch transaction processing groups reward distributions to amortize gas costs. The Graph protocol handles off-chain event indexing. Future development includes state channels for high-frequency micro-payment scenarios.
+Arbitrum Layer 2部署为主操作提供低于0.10美元的交易费用和40,000 TPS的吞吐量。批量交易处理将奖励分配分组，以摊销燃气成本。The Graph协议处理链下事件索引。未来开发包括用于高频微支付场景的状态通道。
 
-Gas optimization techniques reduce transaction costs through Merkle proof-based reward claims (80\% savings), lazy veCPT balance evaluation, packed storage variable encoding, and preferential use of event logs over state variables where functionally equivalent.
+燃气优化技术通过基于默克尔证明的奖励申领（节省80%）、veCPT余额的延迟评估、打包存储变量编码，以及在功能等效的情况下优先使用事件日志而非状态变量，降低交易成本。
 
-\subsection{Disaster Recovery}
+\subsection{灾难恢复}
 
-\subsubsection{Backup Infrastructure}
+\subsubsection{备份基础设施}
 
-Database backups execute daily (full) and six-hourly (incremental) with continuous transaction log replication. The system maintains 30-day retention before cold storage archival. Smart contract state leverages blockchain's inherent immutability, supplemented by archive node deployment and quarterly decentralized storage snapshots (IPFS/Arweave). User job results backup to designated storage endpoints, with platform metadata retention for 90 days and on-demand export capability for GDPR compliance.
+数据库备份每天执行一次全量备份，每六小时执行一次增量备份，并进行连续交易日志复制。系统在冷存储归档前保留30天。智能合约状态利用区块链固有的不可变性，辅以归档节点部署和每季度的去中心化存储快照（IPFS/Arweave）。用户作业结果备份到指定的存储端点，平台元数据保留90天，并具备GDPR合规性要求的按需导出能力。
 
-\subsubsection{Recovery Objectives}
+\subsubsection{恢复目标}
 
-Table~\ref{tab:recovery-targets} specifies component-level recovery time (RTO) and recovery point (RPO) objectives.
+表~\ref{tab:recovery-targets}指定了组件级别的恢复时间目标（RTO）和恢复点目标（RPO）。
 
 \begin{table}[htbp]
 \centering
-\caption{Recovery Time and Point Objectives}
+\caption{恢复时间与恢复点目标}
 \label{tab:recovery-targets}
 \begin{tabular}{lcc}
 \hline
-\textbf{Component} & \textbf{RTO} & \textbf{RPO} \\
+\textbf{组件} & \textbf{RTO} & \textbf{RPO} \\
 \hline
-Smart Contracts & N/A & 0 \\
-Web Portal & 1 hour & 6 hours \\
-Database & 2 hours & 1 hour \\
-Job Scheduler & 30 minutes & 15 minutes \\
+智能合约 & 不适用 & 0 \\
+门户 & 1小时 & 6小时 \\
+数据库 & 2小时 & 1小时 \\
+作业调度器 & 30分钟 & 15分钟 \\
 \hline
 \end{tabular}
 \end{table}
 
-Active-active deployment across US and EU regions enables automatic DNS failover upon 5-minute primary region unavailability. Real-time inter-region data synchronization maintains consistency, with manual override capability for operational intervention.
+美国和欧盟地区的双活部署在主区域不可用5分钟后启用自动DNS故障转移。实时跨区域数据同步保持一致性，具备操作干预的手动覆盖能力。
 
-\subsection{Development Roadmap}
+\subsection{发展路线图}
 
-Near-term development (6-12 months) prioritizes mobile applications for iOS and Android, enhanced API offerings (RESTful, GraphQL) for third-party integration, machine learning-based cost optimization, and additional blockchain bridge deployment (Polygon, Optimism).
+短期开发（6-12个月）优先考虑iOS和Android移动应用、用于第三方集成的增强API产品（RESTful、GraphQL）、基于机器学习的成本优化，以及额外的区块链桥接部署（Polygon、Optimism）。
 
-Medium-term objectives (1-2 years) expand platform capabilities through edge computing support for IoT deployments, confidential computing integration (Intel SGX, AMD SEV) for sensitive workloads, decentralized storage protocols (Filecoin, Arweave), specialized AI/ML resource marketplaces, and exploratory quantum computing partnerships.
+中期目标（1-2年）通过支持物联网部署的边缘计算、用于敏感工作负载的机密计算集成（Intel SGX、AMD SEV）、去中心化存储协议（Filecoin、Arweave）、专门的AI/ML资源市场，以及探索性的量子计算合作伙伴关系，扩展平台能力。
 
-Long-term vision (2-5 years) encompasses full DAO governance transition, open decentralized compute protocol development, zero-knowledge proof implementation for privacy enhancement, cross-chain interoperability via IBC or equivalent protocols, and NFT-based tokenization of physical computing resources.
+长期愿景（2-5年）包括全面的DAO治理过渡、开放式去中心化计算协议开发、用于隐私增强的零知识证明实现、通过IBC或等效协议的跨链互操作性，以及物理计算资源的NFT化。
 
-\subsection{Summary}
+\subsection{总结}
 
-This chapter detailed the technical architecture integrating Web3 blockchain infrastructure with established HPC systems. The hybrid design bridges decentralized incentive mechanisms (CPT token, vote-escrowed governance) with the proven CHESS cluster management platform. Security architecture implements multi-layer protection through smart contract audits, infrastructure hardening, and regulatory compliance pathways (SOC 2, ISO 27001). The system scales from thousands to hundreds of thousands of concurrent users while maintaining sub-200ms API response times.
+本章详细介绍了将Web3区块链基础设施与成熟HPC系统集成的技术架构。混合设计将去中心化激励机制（CPT代币、锁仓投票治理）与成熟的CHESS集群管理平台相结合。安全架构通过智能合约审计、基础设施加固和监管合规路径（SOC 2、ISO 27001）实现多层保护。系统可从数千个并发用户扩展到数十万个，同时保持API响应时间在200ms以内。
 
-Relative to existing decentralized computing projects (Golem, iExec, Render), CyberPlaza differentiates through mature infrastructure (20+ year CHESS platform history), enterprise compliance orientation, multi-cloud integration beyond peer-to-peer architectures, pre-integrated application ecosystem, and hybrid marketplace combining decentralized access with professional SP certification. This positioning addresses enterprise computing requirements while enabling Web3 economic participation.
+与现有的去中心化计算项目（Golem、iExec、Render）相比，CyberPlaza通过成熟的基础设施（20+年CHESS平台历史）、企业合规导向、超越点对点架构的多云集成、预集成的应用生态系统，以及结合去中心化访问与专业SP认证的混合市场进行差异化。这种定位满足企业计算需求，同时支持Web3经济参与。
