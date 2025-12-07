@@ -1,135 +1,135 @@
 \contentsline {chapter}{\numberline {1}執行摘要}{1}{chapter.1}%
-\contentsline {chapter}{\numberline {2}願景與使命}{2}{chapter.2}%
-\contentsline {chapter}{\numberline {3}營運概覽}{3}{chapter.3}%
-\contentsline {subsection}{\numberline {3.0.1}我們欲解決的挑戰}{3}{subsection.3.0.1}%
-\contentsline {subsection}{\numberline {3.0.2}我們的解決方案大綱}{3}{subsection.3.0.2}%
-\contentsline {chapter}{\numberline {4}營運中各角色之說明}{4}{chapter.4}%
-\contentsline {section}{\numberline {4.1}營運的4種角色}{4}{section.4.1}%
-\contentsline {subsection}{\numberline {4.1.1}平台的角色}{4}{subsection.4.1.1}%
-\contentsline {subsubsection}{所有權與參與}{4}{subsection.4.1.1}%
-\contentsline {subsubsection}{平台功能}{4}{subsection.4.1.1}%
-\contentsline {subsubsection}{準備金管理}{4}{subsection.4.1.1}%
-\contentsline {subsubsection}{平台參與與未來擴展}{4}{subsection.4.1.1}%
-\contentsline {subsection}{\numberline {4.1.2}服務提供者（SP）的角色}{5}{subsection.4.1.2}%
-\contentsline {subsubsection}{註冊與服務上架}{5}{subsection.4.1.2}%
-\contentsline {subsubsection}{付款與獎勵}{5}{subsection.4.1.2}%
-\contentsline {subsubsection}{品質保證}{5}{subsection.4.1.2}%
-\contentsline {subsubsection}{彈性服務配置}{5}{subsection.4.1.2}%
-\contentsline {subsection}{\numberline {4.1.3}流動性提供者的角色}{5}{subsection.4.1.3}%
-\contentsline {subsubsection}{概述}{5}{subsection.4.1.3}%
-\contentsline {subsubsection}{流動性提供的運作方式}{5}{subsection.4.1.3}%
-\contentsline {subsubsection}{可及性}{5}{subsection.4.1.3}%
-\contentsline {subsubsection}{報酬與優惠}{5}{subsection.4.1.3}%
-\contentsline {subsection}{\numberline {4.1.4}使用者的角色}{5}{subsection.4.1.4}%
-\contentsline {subsubsection}{取得計算資源}{5}{subsection.4.1.4}%
-\contentsline {subsubsection}{具競爭力的價格}{5}{subsection.4.1.4}%
-\contentsline {subsubsection}{付款保護與透明度}{5}{subsection.4.1.4}%
-\contentsline {subsubsection}{使用者獎勵計畫}{6}{subsection.4.1.4}%
-\contentsline {chapter}{\numberline {5}CyberPlaza Token (CPT) 與代幣經濟學}{7}{chapter.5}%
-\contentsline {subsection}{\numberline {5.0.1}CPT 代幣概覽與效用}{7}{subsection.5.0.1}%
-\contentsline {subsubsection}{支付系統}{7}{subsection.5.0.1}%
-\contentsline {subsubsection}{CyberPlaza Token (CPT)}{7}{subsection.5.0.1}%
-\contentsline {subsubsection}{CPT 核心效用}{7}{subsection.5.0.1}%
-\contentsline {paragraph}{治理權利}{7}{subsection.5.0.1}%
-\contentsline {paragraph}{透過質押的收入分潤}{7}{subsection.5.0.1}%
-\contentsline {paragraph}{使用優惠}{7}{subsection.5.0.1}%
-\contentsline {paragraph}{生態系激勵措施}{7}{subsection.5.0.1}%
-\contentsline {paragraph}{通縮機制}{7}{subsection.5.0.1}%
-\contentsline {subsection}{\numberline {5.0.2}收入模型與分配機制}{8}{subsection.5.0.2}%
-\contentsline {subsubsection}{平台收入來源}{8}{subsection.5.0.2}%
-\contentsline {subsubsection}{SaaS 訂閱層級}{8}{table.caption.2}%
-\contentsline {subsubsection}{收入分配模型}{8}{table.caption.3}%
-\contentsline {subsubsection}{質押獎勵計算範例}{8}{table.caption.3}%
-\contentsline {subsubsection}{USDC 存款人流動性池報酬}{9}{table.caption.3}%
-\contentsline {subsection}{\numberline {5.0.3}代幣分配與鎖倉釋放計畫}{9}{subsection.5.0.3}%
-\contentsline {subsubsection}{總供應量與分配}{9}{subsection.5.0.3}%
-\contentsline {subsubsection}{釋放細節}{9}{table.caption.5}%
-\contentsline {paragraph}{社群激勵（55\%）}{9}{table.caption.5}%
-\contentsline {paragraph}{團隊分配（15\%）}{9}{table.caption.5}%
-\contentsline {paragraph}{基金會分配（17.5\%）}{9}{table.caption.5}%
-\contentsline {paragraph}{私募（12.5\%）}{10}{table.caption.5}%
-\contentsline {subsection}{\numberline {5.0.4}流動性激勵與 veToken 質押模型}{10}{subsection.5.0.4}%
-\contentsline {subsubsection}{veToken 機制（Vote-Escrowed CPT）}{10}{subsection.5.0.4}%
-\contentsline {subsubsection}{veCPT 的優勢}{10}{table.caption.6}%
-\contentsline {subsubsection}{流動性挖礦計畫}{10}{table.caption.6}%
-\contentsline {subsubsection}{反大戶與公平發布機制}{10}{table.caption.6}%
-\contentsline {subsubsection}{比較：傳統 vs. veCPT 模型}{10}{table.caption.6}%
-\contentsline {subsection}{\numberline {5.0.5}上市策略與保守情境}{10}{subsection.5.0.5}%
-\contentsline {subsubsection}{冷啟動策略}{10}{subsection.5.0.5}%
-\contentsline {paragraph}{第 0 階段：種子使用者（第 1–3 個月）}{11}{subsection.5.0.5}%
-\contentsline {paragraph}{第 1 階段：早期採用者（第 3–12 個月）}{11}{subsection.5.0.5}%
-\contentsline {paragraph}{第 2 階段：成長（第 12–24 個月）}{11}{subsection.5.0.5}%
-\contentsline {subsubsection}{財務情境}{11}{subsection.5.0.5}%
-\contentsline {paragraph}{保守情境（高機率）}{11}{subsection.5.0.5}%
-\contentsline {paragraph}{基本情境（中機率）}{11}{table.caption.8}%
-\contentsline {paragraph}{樂觀情境（低機率）}{11}{table.caption.9}%
-\contentsline {paragraph}{主要假設}{11}{table.caption.10}%
-\contentsline {paragraph}{資金需求}{11}{table.caption.10}%
-\contentsline {paragraph}{損益平衡分析}{12}{table.caption.10}%
-\contentsline {chapter}{\numberline {6}科技與架構}{13}{chapter.6}%
-\contentsline {section}{\numberline {6.1}專案治理基礎設施}{13}{section.6.1}%
-\contentsline {subsection}{\numberline {6.1.1}概述}{13}{subsection.6.1.1}%
-\contentsline {subsection}{\numberline {6.1.2}智慧合約模組}{13}{subsection.6.1.2}%
-\contentsline {subsection}{\numberline {6.1.3}代幣標準與小數處理}{15}{subsection.6.1.3}%
-\contentsline {subsection}{\numberline {6.1.4}投票託管代幣機制}{15}{subsection.6.1.4}%
-\contentsline {subsubsection}{獎勵分配}{15}{equation.6.1.2}%
-\contentsline {subsubsection}{安全性與最佳化}{16}{equation.6.1.4}%
-\contentsline {subsection}{\numberline {6.1.5}預言機整合}{16}{subsection.6.1.5}%
-\contentsline {subsection}{\numberline {6.1.6}治理架構}{16}{subsection.6.1.6}%
-\contentsline {subsection}{\numberline {6.1.7}跨鏈基礎設施}{16}{subsection.6.1.7}%
-\contentsline {subsection}{\numberline {6.1.8}錢包基礎設施}{16}{subsection.6.1.8}%
-\contentsline {section}{\numberline {6.2}市場運算基礎設施}{16}{section.6.2}%
-\contentsline {subsection}{\numberline {6.2.1}系統架構}{16}{subsection.6.2.1}%
-\contentsline {subsection}{\numberline {6.2.2}HPC基礎設施元件}{17}{subsection.6.2.2}%
-\contentsline {subsubsection}{軟體堆疊}{17}{subsection.6.2.2}%
-\contentsline {subsection}{\numberline {6.2.3}付款與結算基礎設施}{17}{subsection.6.2.3}%
-\contentsline {subsubsection}{託管機制}{17}{subsection.6.2.3}%
-\contentsline {subsubsection}{爭議解決協議}{17}{subsection.6.2.3}%
-\contentsline {subsubsection}{服務提供商認證}{17}{subsection.6.2.3}%
-\contentsline {subsection}{\numberline {6.2.4}技術堆疊}{17}{subsection.6.2.4}%
-\contentsline {subsection}{\numberline {6.2.5}平台使用者功能}{17}{subsection.6.2.5}%
-\contentsline {subsection}{\numberline {6.2.6}公有雲整合}{18}{subsection.6.2.6}%
-\contentsline {subsubsection}{廠商整合模型}{18}{subsection.6.2.6}%
-\contentsline {subsubsection}{作業提交工作流程}{18}{subsection.6.2.6}%
-\contentsline {subsection}{\numberline {6.2.7}多叢集管理系統}{18}{subsection.6.2.7}%
-\contentsline {subsubsection}{核心功能}{18}{subsection.6.2.7}%
-\contentsline {subsection}{\numberline {6.2.8}效能監控基礎設施}{18}{subsection.6.2.8}%
-\contentsline {subsubsection}{CHESS監控功能}{18}{subsection.6.2.8}%
-\contentsline {subsubsection}{作業提交與管理}{19}{subsection.6.2.8}%
-\contentsline {subsubsection}{使用者管理}{19}{subsection.6.2.8}%
-\contentsline {subsubsection}{通知與訊息}{19}{subsection.6.2.8}%
-\contentsline {subsection}{\numberline {6.2.9}應用中心}{19}{subsection.6.2.9}%
-\contentsline {subsection}{\numberline {6.2.10}硬體效能評估}{19}{subsection.6.2.10}%
-\contentsline {subsection}{\numberline {6.2.11}安全架構與合規}{19}{subsection.6.2.11}%
-\contentsline {subsubsection}{多層安全模型}{19}{subsection.6.2.11}%
-\contentsline {subsubsection}{事件回應}{19}{subsection.6.2.11}%
-\contentsline {subsubsection}{監管合規}{19}{subsection.6.2.11}%
-\contentsline {subsection}{\numberline {6.2.12}擴展性與效能最佳化}{20}{subsection.6.2.12}%
-\contentsline {subsubsection}{水平擴展架構}{20}{subsection.6.2.12}%
-\contentsline {subsubsection}{效能目標}{20}{subsection.6.2.12}%
-\contentsline {subsubsection}{區塊鏈擴展性}{20}{subsection.6.2.12}%
-\contentsline {subsection}{\numberline {6.2.13}災難復原}{20}{subsection.6.2.13}%
-\contentsline {subsubsection}{備份基礎設施}{20}{subsection.6.2.13}%
-\contentsline {subsubsection}{復原目標}{20}{subsection.6.2.13}%
-\contentsline {subsection}{\numberline {6.2.14}發展路線圖}{21}{subsection.6.2.14}%
-\contentsline {subsection}{\numberline {6.2.15}總結}{21}{subsection.6.2.15}%
-\contentsline {chapter}{\numberline {7}發展路線圖}{22}{chapter.7}%
-\contentsline {section}{\numberline {7.1}發展路線圖與募資計畫}{22}{section.7.1}%
-\contentsline {subsection}{\numberline {7.1.1}專案發展路線圖}{22}{subsection.7.1.1}%
-\contentsline {subsection}{\numberline {7.1.2}募資計畫}{22}{subsection.7.1.2}%
-\contentsline {chapter}{\numberline {8}核心團隊、基金會與顧問}{23}{chapter.8}%
-\contentsline {chapter}{\numberline {9}合作夥伴與協作}{25}{chapter.9}%
-\contentsline {subsubsection}{通路合作夥伴}{25}{chapter.9}%
-\contentsline {chapter}{\numberline {10}市場定位與競爭優勢}{26}{chapter.10}%
-\contentsline {section}{\numberline {10.1}市場脈絡與成長動態}{26}{section.10.1}%
-\contentsline {section}{\numberline {10.2}相較於資產代幣化平台的定位}{26}{section.10.2}%
-\contentsline {section}{\numberline {10.3}競爭分析：Web3 運算平台}{26}{section.10.3}%
-\contentsline {subsection}{\numberline {10.3.1}市場格局概覽}{26}{subsection.10.3.1}%
-\contentsline {subsection}{\numberline {10.3.2}技術差異}{26}{subsection.10.3.2}%
-\contentsline {subsection}{\numberline {10.3.3}營運成熟度}{26}{subsection.10.3.3}%
-\contentsline {subsection}{\numberline {10.3.4}資源與用戶基礎}{27}{subsection.10.3.4}%
-\contentsline {subsection}{\numberline {10.3.5}整合生態系策略}{27}{subsection.10.3.5}%
-\contentsline {chapter}{\numberline {11}測試運作三個月後之現況}{28}{chapter.11}%
-\contentsline {chapter}{\numberline {12}常見問題集}{29}{chapter.12}%
-\contentsline {section}{\numberline {12.1}常見問題}{29}{section.12.1}%
+\contentsline {chapter}{\numberline {2}願景與使命}{3}{chapter.2}%
+\contentsline {chapter}{\numberline {3}運作概述}{4}{chapter.3}%
+\contentsline {subsection}{\numberline {3.0.1}我們旨在解決的挑戰}{4}{subsection.3.0.1}%
+\contentsline {subsection}{\numberline {3.0.2}我們的解決方案大綱}{4}{subsection.3.0.2}%
+\contentsline {chapter}{\numberline {4}營運角色說明}{6}{chapter.4}%
+\contentsline {section}{\numberline {4.1}營運的4種角色}{6}{section.4.1}%
+\contentsline {subsection}{\numberline {4.1.1}平台的角色}{6}{subsection.4.1.1}%
+\contentsline {subsubsection}{所有權與參與}{6}{subsection.4.1.1}%
+\contentsline {subsubsection}{平台功能}{6}{subsection.4.1.1}%
+\contentsline {subsubsection}{準備金管理}{6}{subsection.4.1.1}%
+\contentsline {subsubsection}{平台參與與未來擴展}{7}{subsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.1.2}服務提供商（SP）的角色}{7}{subsection.4.1.2}%
+\contentsline {subsubsection}{註冊與服務上架}{7}{subsection.4.1.2}%
+\contentsline {subsubsection}{付款與獎勵}{7}{subsection.4.1.2}%
+\contentsline {subsubsection}{品質保證}{7}{subsection.4.1.2}%
+\contentsline {subsubsection}{彈性服務配置}{7}{subsection.4.1.2}%
+\contentsline {subsection}{\numberline {4.1.3}流動性提供商的角色}{7}{subsection.4.1.3}%
+\contentsline {subsubsection}{概述}{7}{subsection.4.1.3}%
+\contentsline {subsubsection}{流動性提供機制運作方式}{7}{subsection.4.1.3}%
+\contentsline {subsubsection}{可及性}{8}{subsection.4.1.3}%
+\contentsline {subsubsection}{收益與福利}{8}{subsection.4.1.3}%
+\contentsline {subsection}{\numberline {4.1.4}使用者的角色}{8}{subsection.4.1.4}%
+\contentsline {subsubsection}{存取運算資源}{8}{subsection.4.1.4}%
+\contentsline {subsubsection}{具競爭力的定價}{8}{subsection.4.1.4}%
+\contentsline {subsubsection}{付款保護與透明化}{8}{subsection.4.1.4}%
+\contentsline {subsubsection}{使用者獎勵計畫}{8}{subsection.4.1.4}%
+\contentsline {chapter}{\numberline {5}CyberPlaza代幣（CPT）與代幣經濟學}{9}{chapter.5}%
+\contentsline {subsection}{\numberline {5.0.1}CPT代幣概覽與效用}{9}{subsection.5.0.1}%
+\contentsline {subsubsection}{支付系統}{9}{subsection.5.0.1}%
+\contentsline {subsubsection}{CyberPlaza代幣（CPT）}{9}{subsection.5.0.1}%
+\contentsline {subsubsection}{CPT核心效用}{9}{subsection.5.0.1}%
+\contentsline {paragraph}{治理權利}{9}{subsection.5.0.1}%
+\contentsline {paragraph}{透過質押分潤}{9}{subsection.5.0.1}%
+\contentsline {paragraph}{使用優惠}{9}{subsection.5.0.1}%
+\contentsline {paragraph}{生態系激勵}{10}{subsection.5.0.1}%
+\contentsline {paragraph}{通縮機制}{10}{subsection.5.0.1}%
+\contentsline {subsection}{\numberline {5.0.2}收益模型與分配機制}{10}{subsection.5.0.2}%
+\contentsline {subsubsection}{平臺收益來源}{10}{subsection.5.0.2}%
+\contentsline {subsubsection}{SaaS訂閱等級}{10}{table.caption.2}%
+\contentsline {subsubsection}{收益分配模型}{11}{table.caption.3}%
+\contentsline {subsubsection}{質押獎勵計算範例}{11}{table.caption.3}%
+\contentsline {subsubsection}{USDC存款人的流動性池報酬}{11}{table.caption.3}%
+\contentsline {subsection}{\numberline {5.0.3}代幣分配與歸屬時程表}{11}{subsection.5.0.3}%
+\contentsline {subsubsection}{總供應量與分配}{11}{subsection.5.0.3}%
+\contentsline {subsubsection}{歸屬細節}{11}{table.caption.5}%
+\contentsline {paragraph}{社群激勵（55\%）}{11}{table.caption.5}%
+\contentsline {paragraph}{團隊分配（15\%）}{12}{table.caption.5}%
+\contentsline {paragraph}{基金會分配（17.5\%）}{12}{table.caption.5}%
+\contentsline {paragraph}{私募（12.5\%）}{12}{table.caption.5}%
+\contentsline {subsection}{\numberline {5.0.4}流動性激勵與veToken質押模型}{12}{subsection.5.0.4}%
+\contentsline {subsubsection}{veToken機制（投票質押CPT）}{12}{subsection.5.0.4}%
+\contentsline {subsubsection}{veCPT的好處}{13}{table.caption.6}%
+\contentsline {subsubsection}{流動性挖礦計畫}{13}{table.caption.6}%
+\contentsline {subsubsection}{反巨鯨與公平上市機制}{13}{table.caption.6}%
+\contentsline {subsubsection}{比較：傳統模型與veCPT模型}{13}{table.caption.6}%
+\contentsline {subsection}{\numberline {5.0.5}上市策略與保守情境}{13}{subsection.5.0.5}%
+\contentsline {subsubsection}{冷啟動策略}{13}{subsection.5.0.5}%
+\contentsline {paragraph}{階段0：種子使用者（第1–3個月）}{14}{subsection.5.0.5}%
+\contentsline {paragraph}{階段1：早期採用者（第3–12個月）}{14}{subsection.5.0.5}%
+\contentsline {paragraph}{階段2：成長（第12–24個月）}{14}{subsection.5.0.5}%
+\contentsline {subsubsection}{財務情境}{14}{subsection.5.0.5}%
+\contentsline {paragraph}{保守情境（高機率）}{14}{subsection.5.0.5}%
+\contentsline {paragraph}{基本情境（中機率）}{14}{table.caption.8}%
+\contentsline {paragraph}{樂觀情境（低機率）}{14}{table.caption.9}%
+\contentsline {paragraph}{關鍵假設}{15}{table.caption.10}%
+\contentsline {paragraph}{融資需求}{15}{table.caption.10}%
+\contentsline {paragraph}{損益平衡分析}{15}{table.caption.10}%
+\contentsline {chapter}{\numberline {6}技術與架構}{16}{chapter.6}%
+\contentsline {section}{\numberline {6.1}專案治理基礎設施}{16}{section.6.1}%
+\contentsline {subsection}{\numberline {6.1.1}概述}{16}{subsection.6.1.1}%
+\contentsline {subsection}{\numberline {6.1.2}智慧合約模組}{16}{subsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.1.3}代幣標準與小數點處理}{18}{subsection.6.1.3}%
+\contentsline {subsection}{\numberline {6.1.4}投票鎖倉代幣機制}{18}{subsection.6.1.4}%
+\contentsline {subsubsection}{獎勵分配}{19}{equation.6.1.2}%
+\contentsline {subsubsection}{安全性與最佳化}{19}{equation.6.1.4}%
+\contentsline {subsection}{\numberline {6.1.5}預言機整合}{19}{subsection.6.1.5}%
+\contentsline {subsection}{\numberline {6.1.6}治理架構}{19}{subsection.6.1.6}%
+\contentsline {subsection}{\numberline {6.1.7}跨鏈基礎設施}{19}{subsection.6.1.7}%
+\contentsline {subsection}{\numberline {6.1.8}錢包基礎設施}{20}{subsection.6.1.8}%
+\contentsline {section}{\numberline {6.2}市場計算基礎設施}{20}{section.6.2}%
+\contentsline {subsection}{\numberline {6.2.1}系統架構}{20}{subsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.2.2}HPC 基礎設施元件}{20}{subsection.6.2.2}%
+\contentsline {subsubsection}{軟體堆疊}{20}{subsection.6.2.2}%
+\contentsline {subsection}{\numberline {6.2.3}支付與結算基礎設施}{20}{subsection.6.2.3}%
+\contentsline {subsubsection}{託管機制}{20}{subsection.6.2.3}%
+\contentsline {subsubsection}{爭議解決協議}{21}{subsection.6.2.3}%
+\contentsline {subsubsection}{服務提供者認證}{21}{subsection.6.2.3}%
+\contentsline {subsection}{\numberline {6.2.4}技術堆疊}{21}{subsection.6.2.4}%
+\contentsline {subsection}{\numberline {6.2.5}平台使用者功能}{21}{subsection.6.2.5}%
+\contentsline {subsection}{\numberline {6.2.6}公開雲端整合}{22}{subsection.6.2.6}%
+\contentsline {subsubsection}{廠商整合模式}{22}{subsection.6.2.6}%
+\contentsline {subsubsection}{工作提交工作流程}{22}{subsection.6.2.6}%
+\contentsline {subsection}{\numberline {6.2.7}多叢集管理系統}{22}{subsection.6.2.7}%
+\contentsline {subsubsection}{核心功能}{22}{subsection.6.2.7}%
+\contentsline {subsection}{\numberline {6.2.8}效能監控基礎設施}{23}{subsection.6.2.8}%
+\contentsline {subsubsection}{CHESS 監控功能}{23}{subsection.6.2.8}%
+\contentsline {subsubsection}{工作提交與管理}{23}{subsection.6.2.8}%
+\contentsline {subsubsection}{使用者管理}{23}{subsection.6.2.8}%
+\contentsline {subsubsection}{通知與訊息}{23}{subsection.6.2.8}%
+\contentsline {subsection}{\numberline {6.2.9}應用程式中心}{23}{subsection.6.2.9}%
+\contentsline {subsection}{\numberline {6.2.10}硬體效能評估}{24}{subsection.6.2.10}%
+\contentsline {subsection}{\numberline {6.2.11}安全架構與合規性}{24}{subsection.6.2.11}%
+\contentsline {subsubsection}{多層安全模型}{24}{subsection.6.2.11}%
+\contentsline {subsubsection}{事件回應}{24}{subsection.6.2.11}%
+\contentsline {subsubsection}{監管合規性}{24}{subsection.6.2.11}%
+\contentsline {subsection}{\numberline {6.2.12}可擴展性與效能最佳化}{24}{subsection.6.2.12}%
+\contentsline {subsubsection}{水平擴展架構}{24}{subsection.6.2.12}%
+\contentsline {subsubsection}{效能目標}{25}{subsection.6.2.12}%
+\contentsline {subsubsection}{區塊鏈可擴展性}{25}{subsection.6.2.12}%
+\contentsline {subsection}{\numberline {6.2.13}災難復原}{25}{subsection.6.2.13}%
+\contentsline {subsubsection}{備份基礎設施}{25}{subsection.6.2.13}%
+\contentsline {subsubsection}{復原目標}{25}{subsection.6.2.13}%
+\contentsline {subsection}{\numberline {6.2.14}開發路線圖}{26}{subsection.6.2.14}%
+\contentsline {subsection}{\numberline {6.2.15}總結}{26}{subsection.6.2.15}%
+\contentsline {chapter}{\numberline {7}發展路線圖}{27}{chapter.7}%
+\contentsline {section}{\numberline {7.1}路線圖與募資計畫}{27}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}專案路線圖}{27}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}募資計畫}{27}{subsection.7.1.2}%
+\contentsline {chapter}{\numberline {8}核心團隊、基金會與顧問}{28}{chapter.8}%
+\contentsline {chapter}{\numberline {9}夥伴關係與合作}{30}{chapter.9}%
+\contentsline {subsubsection}{通路夥伴}{30}{chapter.9}%
+\contentsline {chapter}{\numberline {10}市場定位與競爭優勢}{31}{chapter.10}%
+\contentsline {section}{\numberline {10.1}市場脈絡與成長動態}{31}{section.10.1}%
+\contentsline {section}{\numberline {10.2}相對於資產代幣化平台的定位}{31}{section.10.2}%
+\contentsline {section}{\numberline {10.3}競爭分析：Web3 運算平台}{31}{section.10.3}%
+\contentsline {subsection}{\numberline {10.3.1}市場態勢概覽}{31}{subsection.10.3.1}%
+\contentsline {subsection}{\numberline {10.3.2}技術差異化}{31}{subsection.10.3.2}%
+\contentsline {subsection}{\numberline {10.3.3}營運成熟度}{32}{subsection.10.3.3}%
+\contentsline {subsection}{\numberline {10.3.4}資源與用戶基礎}{32}{subsection.10.3.4}%
+\contentsline {subsection}{\numberline {10.3.5}整合式生態系統策略}{32}{subsection.10.3.5}%
+\contentsline {chapter}{\numberline {11}測試運行3個月後的現況}{33}{chapter.11}%
+\contentsline {chapter}{\numberline {12}FAQ}{34}{chapter.12}%
+\contentsline {section}{\numberline {12.1}常見問題}{34}{section.12.1}%
 \contentsfinish 
