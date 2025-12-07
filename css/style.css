@@ -262,6 +262,13 @@ body {
     transform: rotate(-45deg) translate(7px, -7px);
 }
 
+/* Hide nav-menu buttons on desktop (they're already in nav-actions-desktop) */
+@media (min-width: 769px) {
+    .nav-menu .nav-action-item {
+        display: none;
+    }
+}
+
 /* Mobile menu */
 @media (max-width: 768px) {
     .nav-menu {

@@ -19,16 +19,7 @@ function initNavigation() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
     
-    // Scroll effect
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 100) {
-            nav.style.background = 'rgba(10, 14, 39, 0.95)';
-            nav.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
-        } else {
-            nav.style.background = 'rgba(10, 14, 39, 0.8)';
-            nav.style.boxShadow = 'none';
-        }
-    });
+    // Scroll effect moved to optimizedScroll handler below
     
     // Mobile menu toggle
     if (hamburger) {
@@ -145,22 +136,24 @@ function initChartAnimations() {
 // === 3D Card Effects ===
 function init3DEffects() {
     const cards = document.querySelectorAll('.card-3d, .glass-card');
-    
+
     cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
+        const handleMouseMove = throttle((e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
-            
+
             const centerX = rect.width / 2;
             const centerY = rect.height / 2;
-            
+
             const rotateX = (y - centerY) / 10;
             const rotateY = (centerX - x) / 10;
-            
+
             card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
-        });
-        
+        }, 50); // Throttle to 50ms
+
+        card.addEventListener('mousemove', handleMouseMove);
+
         card.addEventListener('mouseleave', () => {
             card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateZ(0)';
         });
@@ -169,22 +162,7 @@ function init3DEffects() {
 
 // === Parallax Effect ===
 function initParallax() {
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        
-        // Parallax for floating cards
-        const floatingCards = document.querySelectorAll('.floating-card');
-        floatingCards.forEach((card, index) => {
-            const speed = 0.05 * (index + 1);
-            card.style.transform = `translateY(${scrolled * speed}px)`;
-        });
-        
-        // Parallax for hero background
-        const heroBg = document.querySelector('.hero-bg');
-        if (heroBg) {
-            heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
-        }
-    });
+    // Logic moved to optimizedScroll handler below
 }
 
 // === Cursor Effect (Optional Premium Feature) ===
@@ -460,9 +438,46 @@ function debounce(func, wait) {
     };
 }
 
+// Throttle function for mousemove/resize events
+function throttle(func, limit) {
+    let inThrottle = false;
+    return function(...args) {
+        if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => (inThrottle = false), limit);
+        }
+    };
+}
+
 // Optimized scroll handler
 const optimizedScroll = debounce(() => {
-    // Your scroll logic here
+    const scrolled = window.pageYOffset;
+
+    // Navigation scroll effect
+    const nav = document.querySelector('.navbar');
+    if (nav) {
+        if (scrolled > 100) {
+            nav.style.background = 'rgba(10, 14, 39, 0.95)';
+            nav.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+        } else {
+            nav.style.background = 'rgba(10, 14, 39, 0.8)';
+            nav.style.boxShadow = 'none';
+        }
+    }
+
+    // Parallax for floating cards
+    const floatingCards = document.querySelectorAll('.floating-card');
+    floatingCards.forEach((card, index) => {
+        const speed = 0.05 * (index + 1);
+        card.style.transform = `translateY(${scrolled * speed}px)`;
+    });
+
+    // Parallax for hero background
+    const heroBg = document.querySelector('.hero-bg');
+    if (heroBg) {
+        heroBg.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }
 }, 10);
 
 window.addEventListener('scroll', optimizedScroll);
