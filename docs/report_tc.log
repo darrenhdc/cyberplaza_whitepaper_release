@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.7)  7 DEC 2025 09:23
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.7)  7 DEC 2025 09:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2604,7 +2604,7 @@ L3 programming layer <2022/07/14>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `report_tc.out' has not changed.
-(rerunfilecheck)             Checksum: DEE63AFA8F5AA73E70743FEC8EAA9E58;7062.
+(rerunfilecheck)             Checksum: A560E2186C8DE402A5E013A1521EF316;7062.
 Package logreq Info: Writing requests to 'report_tc.run.xml'.
 \openout1 = `report_tc.run.xml'.
 

@@ -129,7 +129,7 @@
 \contentsline {subsection}{\numberline {10.3.3}运营成熟度}{32}{subsection.10.3.3}%
 \contentsline {subsection}{\numberline {10.3.4}资源与用户基础}{32}{subsection.10.3.4}%
 \contentsline {subsection}{\numberline {10.3.5}一体化生态系统方法}{32}{subsection.10.3.5}%
-\contentsline {chapter}{\numberline {11}试运行3个月后的当前状态}{33}{chapter.11}%
+\contentsline {chapter}{\numberline {11}三个月试运行后的当前状态}{33}{chapter.11}%
 \contentsline {chapter}{\numberline {12}FAQ}{34}{chapter.12}%
 \contentsline {section}{\numberline {12.1}常见问题}{34}{section.12.1}%
 \contentsfinish 
