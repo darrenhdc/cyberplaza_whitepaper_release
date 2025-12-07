@@ -131,6 +131,11 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Sync to latest main (after bot push)
+        run: |
+          git fetch origin main
+          git checkout origin/main
+
       - name: Setup TeX
         run: |
           sudo apt-get update -y
