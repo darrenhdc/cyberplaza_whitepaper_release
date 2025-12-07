@@ -46,15 +46,22 @@ jobs:
       - name: Detect changed mainmatter tex
         id: changed
         run: |
-          # Compare with previous commit; if empty (e.g., first commit), fall back to all
-          CHANGED=$(git diff --name-only HEAD^ HEAD -- cyberplaza_whitepaper/mainmatter/*.tex || true)
-          if [ -z "$CHANGED" ]; then
+          # Only translate when英文源文件有改动；首个提交时全量。
+          if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            CHANGED=$(git diff --name-only HEAD^ HEAD -- cyberplaza_whitepaper/mainmatter/*.tex || true)
+          else
+            # first commit: treat as all changed
             CHANGED=$(ls cyberplaza_whitepaper/mainmatter/*.tex)
+          fi
+          HAS_CHANGES=false
+          if [ -n "$CHANGED" ]; then
+            HAS_CHANGES=true
           fi
           {
             echo 'files<<EOF'
             echo "$CHANGED"
             echo 'EOF'
+            echo "has_changes=$HAS_CHANGES"
           } >> "$GITHUB_OUTPUT"
 
       - name: Install deps
@@ -79,6 +86,10 @@ jobs:
 
       - name: Incremental translate (Simplified)
         run: |
+          if [ "${{ steps.changed.outputs.has_changes }}" != "true" ]; then
+            echo "No English .tex changes detected; skip SC translation."
+            exit 0
+          fi
           export SC_DIR="${GITHUB_WORKSPACE}/cyberplaza_whitepaper/mainmatter_sc"
           if [ "${{ steps.vars.outputs.dry_run }}" = "true" ]; then
             export API_TYPE=test
@@ -94,6 +105,10 @@ jobs:
 
       - name: Incremental translate (Traditional)
         run: |
+          if [ "${{ steps.changed.outputs.has_changes }}" != "true" ]; then
+            echo "No English .tex changes detected; skip TC translation."
+            exit 0
+          fi
           export TC_DIR="${GITHUB_WORKSPACE}/cyberplaza_whitepaper/mainmatter_tc"
           if [ "${{ steps.vars.outputs.dry_run }}" = "true" ]; then
             export API_TYPE=test

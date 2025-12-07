@@ -150,6 +150,11 @@ flowchart TD
 
 - 主要 Secrets（Actions 环境）：`DOUBAO_URL`（v3 路径）、`DOUBAO_KEY`、`TRANSLATE_MODEL_SC`、`TRANSLATE_MODEL_TC`、`CYBERPLAZA_BOT_PAT`（推回 main 时需要）、可选 `OPENAI_API_KEY`（若切换 openai 后端）；`GITHUB_TOKEN` 用于 Pages 发布。
 
+### 翻译/编译行为速记
+- 修改英文 `.tex` 并 push：流水线会自动翻译并编译 PDF，但生成的中文 `.tex` 只在 CI 工作区使用，不会自动提交回仓库；如需保留翻译结果，需手动提交。
+- 修改中文 `.tex` 并 push：仍会触发编译，生成的 PDF 直接使用你提交的中文内容，英文未变时翻译环节基本不会产出新文件。
+- 增量翻译（预览工作流）：仅对变更的英文章节做翻译；无改动的部分沿用缓存/上次结果。
+
 ## 贡献
 
 1. 修改英文源文件 (`cyberplaza_whitepaper/mainmatter/`)
