@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.12)  12 DEC 2025 05:54
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.12)  12 DEC 2025 06:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2330,12 +2330,6 @@ with platform monthly revenue of $1,500,000.
  []
 
 [12]
-Overfull \hbox (1.7391pt too wide) in paragraph at lines 142--143
-\TU/SuisseIntl(1)/m/n/10.53937 (removed USDC holders allocation), investor allo
-cation reduced from 15% to 12.5% (community-
- []
-
-
 Overfull \hbox (7.79659pt too wide) in paragraph at lines 150--151
 \TU/SuisseIntl(1)/m/n/10.53937 quality SPs (CSPs) receive bonus multipliers. Th
 e distribution period is 5 years, with performance-
@@ -2593,7 +2587,7 @@ L3 programming layer <2022/07/14>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `report_en.out' has not changed.
-(rerunfilecheck)             Checksum: E4749C6E732AFA1688350DF6F1E82DC3;12618.
+(rerunfilecheck)             Checksum: F5AD748A7F2A2728A5DFD4F078295AC7;12564.
 Package logreq Info: Writing requests to 'report_en.run.xml'.
 \openout1 = `report_en.run.xml'.
 

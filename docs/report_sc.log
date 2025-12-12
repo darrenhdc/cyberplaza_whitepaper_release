@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.12)  12 DEC 2025 05:54
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.12)  12 DEC 2025 06:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2084,6 +2084,12 @@ Package microtype Info: Character `textquotedblleft ' is missing
 Package microtype Info: Character `textquotedblright ' is missing
 (microtype)             in font `TU/SuisseIntl-SemiBold.ttf(0)/m/n/96'.
 (microtype)             Ignoring protrusion settings for this character.
+
+Overfull \hbox (1.48906pt too wide) in paragraph at lines 3--4
+[]\TU/FandolSong-Regular(0)/m/n/10.53937 计 算 在 现 代 生 活 中 扮 演 着 日 益 重 要 的 角 色，| 
+ 且 这 一 趋 势 预 计 将 在 可 预 见 的 未 来 持 续 下 去。| \TU/SuisseIntl(1)/m/n/10.53937 Web3
+ []
+
 Package microtype Info: Character `textendash ' is missing
 (microtype)             in font `TU/SuisseIntl(1)/m/n/7.52812'.
 (microtype)             Ignoring protrusion settings for this character.
@@ -2280,6 +2286,11 @@ Package microtype Info: Character `textquotedblright ' is missing
 (microtype)             in font `TU/SuisseIntl(1)/b/n/7.52812'.
 (microtype)             Ignoring protrusion settings for this character.
 
+Overfull \hbox (9.3571pt too wide) in paragraph at lines 44--57
+ [][] 
+ []
+
+
 Underfull \hbox (badness 5105) in paragraph at lines 78--78
 []|\TU/SuisseIntl(1)/m/n/10.53937 10 \TU/FandolSong-Regular(0)/m/n/10.53937 个 账
  户、| \TU/SuisseIntl(1)/m/n/10.53937 AI \TU/FandolSong-Regular(0)/m/n/10.53937 优
@@ -2288,7 +2299,7 @@ Underfull \hbox (badness 5105) in paragraph at lines 78--78
 
 
 Underfull \hbox (badness 2150) in paragraph at lines 78--78
-[]|\TU/FandolSong-Regular(0)/m/n/10.53937 无 限 量、|  自 定 义 集 成、|
+[]|\TU/FandolSong-Regular(0)/m/n/10.53937 无 限 账 户、|  定 制 集 成、|
  []
 
 [10] [11] [12] [13] [14]) (./mainmatter_sc/chapter-6.tex [15]
@@ -2361,6 +2372,10 @@ Chapter 10.
 
 ]) (./mainmatter_sc/chapter-11.tex [32]
 Chapter 11.
+Missing character: There is no β (U+03B2) in font [layout/epfl/fonts/suisse-int
+l/SuisseIntl-Regular.ttf]/OT:script=latn;language=dflt;mapping=tex-text;!
+Missing character: There is no β (U+03B2) in font [layout/epfl/fonts/suisse-int
+l/SuisseIntl-Regular.ttf]/OT:script=latn;language=dflt;mapping=tex-text;!
 ) (./mainmatter_sc/chapter-12.tex [33
 
 ]
@@ -2381,16 +2396,16 @@ L3 programming layer <2022/07/14>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `report_sc.out' has not changed.
-(rerunfilecheck)             Checksum: 9281DDC674168DF0DB88E92C3556DC41;6985.
+(rerunfilecheck)             Checksum: 06A81BDD9FBCBD938C190F2709B9D14D;6985.
 Package logreq Info: Writing requests to 'report_sc.run.xml'.
 \openout1 = `report_sc.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47037 strings out of 476415
- 1042609 string characters out of 5792681
- 1950627 words of memory out of 5000000
- 68279 multiletter control sequences out of 15000+600000
+ 47008 strings out of 476415
+ 1040250 string characters out of 5792681
+ 1949627 words of memory out of 5000000
+ 68250 multiletter control sequences out of 15000+600000
  564948 words of font info for 117 fonts, out of 8000000 for 9000
  264 hyphenation exceptions out of 8191
  99i,12n,107p,1154b,1098s stack positions out of 10000i,1000n,20000p,200000b,200000s

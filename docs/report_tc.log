@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.12)  12 DEC 2025 05:54
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2025.12.12)  12 DEC 2025 06:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2113,6 +2113,12 @@ Package microtype Info: Character `textquotedblleft ' is missing
 Package microtype Info: Character `textquotedblright ' is missing
 (microtype)             in font `TU/SuisseIntl-SemiBold.ttf(0)/m/n/96'.
 (microtype)             Ignoring protrusion settings for this character.
+
+Overfull \hbox (11.63847pt too wide) in paragraph at lines 3--4
+[]\TU/NotoSerifCJKTC(0)/m/n/10.53937 運 算 科 技 在 現 代 生 活 中 扮 演 著 日 益 重 要 的 角 色，| 
+ 且 預 期 此 趨 勢 在 可 預 見 的 未 來 仍 將 持 續。| \TU/SuisseIntl(1)/m/n/10.53937 Web3
+ []
+
 Package microtype Info: Character `textendash ' is missing
 (microtype)             in font `TU/SuisseIntl(1)/m/n/7.52812'.
 (microtype)             Ignoring protrusion settings for this character.
@@ -2305,9 +2311,6 @@ Chapter 5.
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
 (hyperref)                than one, level fixed on input line 2.
 
-[9
-
-]
 Package microtype Info: Character `textendash ' is missing
 (microtype)             in font `TU/SuisseIntl(1)/b/n/7.52812'.
 (microtype)             Ignoring protrusion settings for this character.
@@ -2326,41 +2329,42 @@ Package microtype Info: Character `textquotedblleft ' is missing
 Package microtype Info: Character `textquotedblright ' is missing
 (microtype)             in font `TU/SuisseIntl(1)/b/n/7.52812'.
 (microtype)             Ignoring protrusion settings for this character.
+[9
 
-Underfull \hbox (badness 1057) in paragraph at lines 78--78
-[]|\TU/SuisseIntl(1)/m/n/10.53937 2 \TU/NotoSerifCJKTC(0)/m/n/10.53937 個 雲 端 帳 
-號、|  基 本
- []
-
-
-Underfull \hbox (badness 3514) in paragraph at lines 78--78
-[]|\TU/SuisseIntl(1)/m/n/10.53937 10 \TU/NotoSerifCJKTC(0)/m/n/10.53937 個 帳 號、|
- \TU/SuisseIntl(1)/m/n/10.53937 AI \TU/NotoSerifCJKTC(0)/m/n/10.53937 最 佳
+]
+Underfull \hbox (badness 3679) in paragraph at lines 78--78
+[]|\TU/SuisseIntl(1)/m/n/10.53937 2 cloud accounts,
  []
 
 
 Underfull \hbox (badness 10000) in paragraph at lines 78--78
-[]|\TU/NotoSerifCJKTC(0)/m/n/10.53937 無 限 制、|  自 訂 整 合、|
+[]|\TU/SuisseIntl(1)/m/n/10.53937 5 accounts, cost
+ []
+
+
+Underfull \hbox (badness 7116) in paragraph at lines 78--78
+\TU/SuisseIntl(1)/m/n/10.53937 tracking, 1% CPT
+ []
+
+
+Underfull \hbox (badness 2401) in paragraph at lines 78--78
+[]|\TU/SuisseIntl(1)/m/n/10.53937 Unlimited, custom
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 78--78
+\TU/SuisseIntl(1)/m/n/10.53937 integration, 5%
  []
 
 
 Overfull \hbox (9.77303pt too wide) in paragraph at lines 83--84
 []\TU/NotoSerifCJKTC(0)/b/n/10.53937 重 要 注 意 事 項\TU/NotoSerifCJKTC(0)/m/n/10.53
-937 ：|  這 些 預 測 代 表 我 們 的 目 標 情 境。|  我 們 也 模 擬 了 保 守 情 境，|  第 \TU/SuisseIntl(1)
+937 ：|  這 些 預 測 代 表 我 們 的 目 標 情 境。|  我 們 也 建 模 了 保 守 情 境，|  第 \TU/SuisseIntl(1)
 /m/n/10.53937 1 \TU/NotoSerifCJKTC(0)/m/n/10.53937 年 收 益 為 \TU/SuisseIntl(1)/m/
 n/10.53937 $500K–
  []
 
-[10]
-Overfull \hbox (13.69368pt too wide) in paragraph at lines 91--92
-[]\TU/NotoSerifCJKTC(0)/m/n/10.53937 考 慮 第 \TU/SuisseIntl(1)/m/n/10.53937 3 \TU
-/NotoSerifCJKTC(0)/m/n/10.53937 年 平 臺 成 熟 的 情 境，|  平 臺 每 月 收 益 為 \TU/SuisseIntl
-(1)/m/n/10.53937 $1,500,000\TU/NotoSerifCJKTC(0)/m/n/10.53937 。|  質 押 池 分 配  |（
-\TU/SuisseIntl(1)/m/n/10.53937 40%\TU/NotoSerifCJKTC(0)/m/n/10.53937 ）|  提 供 \T
-U/SuisseIntl(1)/m/n/10.53937 $600,000\TU/NotoSerifCJKTC(0)/m/n/10.53937 。|
- []
-
-[11] [12] [13] [14]) (./mainmatter_tc/chapter-6.tex [15]
+[10] [11] [12] [13] [14]) (./mainmatter_tc/chapter-6.tex [15]
 Chapter 6.
 
 Package fontspec Warning: Font "FandolFang-Regular" does not contain requested
@@ -2604,16 +2608,16 @@ L3 programming layer <2022/07/14>
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `report_tc.out' has not changed.
-(rerunfilecheck)             Checksum: 3606D899132490399AC4F671E96169CC;7062.
+(rerunfilecheck)             Checksum: C1CC59AAB545F33EEB9C420885AFE82E;7114.
 Package logreq Info: Writing requests to 'report_tc.run.xml'.
 \openout1 = `report_tc.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 47030 strings out of 476415
- 1038575 string characters out of 5792681
- 1949627 words of memory out of 5000000
- 68261 multiletter control sequences out of 15000+600000
+ 47036 strings out of 476415
+ 1039063 string characters out of 5792681
+ 1947627 words of memory out of 5000000
+ 68267 multiletter control sequences out of 15000+600000
  564996 words of font info for 123 fonts, out of 8000000 for 9000
  264 hyphenation exceptions out of 8191
  99i,12n,107p,1154b,1098s stack positions out of 10000i,1000n,20000p,200000b,200000s

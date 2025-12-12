@@ -1,9 +1,9 @@
 [0] Config.pm:307> INFO - This is Biber 2.19
 [0] Config.pm:310> INFO - Logfile is 'report_sc.blg'
-[54] biber:340> INFO - === Fri Dec 12, 2025, 05:54:15
-[65] Biber.pm:419> INFO - Reading 'report_sc.bcf'
-[111] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
-[121] bbl.pm:660> INFO - Writing 'report_sc.bbl' with encoding 'UTF-8'
-[121] bbl.pm:763> INFO - Output to report_sc.bbl
-[121] Biber.pm:131> WARN - The file 'report_sc.bcf' does not contain any citations!
-[121] Biber.pm:133> INFO - WARNINGS: 1
+[67] biber:340> INFO - === Fri Dec 12, 2025, 06:35:45
+[79] Biber.pm:419> INFO - Reading 'report_sc.bcf'
+[129] Biber.pm:979> INFO - Found 0 citekeys in bib section 0
+[139] bbl.pm:660> INFO - Writing 'report_sc.bbl' with encoding 'UTF-8'
+[139] bbl.pm:763> INFO - Output to report_sc.bbl
+[139] Biber.pm:131> WARN - The file 'report_sc.bcf' does not contain any citations!
+[139] Biber.pm:133> INFO - WARNINGS: 1
